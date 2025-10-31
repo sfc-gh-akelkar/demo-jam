@@ -1,0 +1,335 @@
+# =====================================================
+# Snowflake Intelligence Demo Jam - Semantic Model
+# =====================================================
+# Purpose: Semantic model for Cortex Analyst
+# Enables natural language queries on incident data
+# =====================================================
+
+name: engineering_incidents
+description: >
+  Engineering operations incident tracking and analysis.
+  Enables natural language queries about production incidents, 
+  service reliability, and incident patterns.
+
+tables:
+  - name: incidents
+    description: >
+      Production incidents tracked across all microservices.
+      Includes incident metadata, resolution time, affected users,
+      and root cause categorization.
+    
+    base_table:
+      database: DEMO_JAM
+      schema: ENGINEERING_OPS
+      table: INCIDENTS
+    
+    dimensions:
+      - name: incident_id
+        synonyms:
+          - "incident number"
+          - "ticket id"
+          - "incident identifier"
+        description: Unique identifier for each incident
+        data_type: VARCHAR
+        expr: INCIDENT_ID
+        unique: true
+      
+      - name: incident_type
+        synonyms:
+          - "incident category"
+          - "type of incident"
+          - "problem type"
+          - "issue type"
+        description: >
+          Category of incident (e.g., Database Connection Pool Exhausted,
+          Memory Leak, API Gateway Timeout, SSL Certificate Expiration).
+          Use this to identify patterns and recurring issues.
+        data_type: VARCHAR
+        expr: INCIDENT_TYPE
+        sample_values:
+          - "Database Connection Pool Exhausted"
+          - "Memory Leak in Background Worker"
+          - "API Gateway Timeout"
+          - "Database Query Performance Degradation"
+          - "SSL Certificate Expiration"
+          - "Deployment Rollback Required"
+      
+      - name: severity
+        synonyms:
+          - "priority"
+          - "incident severity"
+          - "criticality"
+          - "impact level"
+        description: >
+          Severity level indicating business impact.
+          Critical = customer-facing outage, High = degraded performance,
+          Medium = internal systems affected.
+        data_type: VARCHAR
+        expr: SEVERITY
+        sample_values:
+          - "Critical"
+          - "High"
+          - "Medium"
+      
+      - name: status
+        synonyms:
+          - "incident status"
+          - "resolution status"
+          - "current state"
+        description: Current status of the incident
+        data_type: VARCHAR
+        expr: STATUS
+        sample_values:
+          - "Resolved"
+          - "In Progress"
+          - "Investigating"
+      
+      - name: service_name
+        synonyms:
+          - "affected service"
+          - "service"
+          - "application"
+          - "microservice"
+          - "system"
+        description: >
+          Name of the microservice or system affected by the incident.
+          Services include Authentication Service, Payment Gateway,
+          Order Management System, etc.
+        data_type: VARCHAR
+        expr: SERVICE_NAME
+        sample_values:
+          - "Authentication Service"
+          - "Payment Gateway"
+          - "Order Management System"
+          - "User Profile Service"
+          - "Notification Engine"
+      
+      - name: root_cause_category
+        synonyms:
+          - "root cause"
+          - "cause category"
+          - "incident cause"
+          - "underlying cause"
+        description: >
+          High-level category of the root cause (Database Configuration,
+          Application Bug, Infrastructure, External Dependency, etc.)
+        data_type: VARCHAR
+        expr: ROOT_CAUSE_CATEGORY
+        sample_values:
+          - "Database Configuration"
+          - "Application Bug"
+          - "Infrastructure"
+          - "External Dependency"
+          - "Database Performance"
+          - "Network"
+      
+      - name: description
+        synonyms:
+          - "incident description"
+          - "details"
+          - "incident summary"
+        description: Detailed description of the incident and resolution
+        data_type: VARCHAR
+        expr: DESCRIPTION
+      
+      - name: created_date
+        synonyms:
+          - "incident date"
+          - "date"
+          - "occurrence date"
+        description: Date the incident occurred
+        data_type: DATE
+        expr: CREATED_DATE
+      
+      - name: year
+        synonyms:
+          - "incident year"
+        description: Year the incident occurred
+        data_type: NUMBER
+        expr: YEAR
+      
+      - name: quarter
+        synonyms:
+          - "fiscal quarter"
+          - "Q1"
+          - "Q2"
+          - "Q3"
+          - "Q4"
+        description: >
+          Calendar quarter (1-4) when incident occurred.
+          Q1 = Jan-Mar, Q2 = Apr-Jun, Q3 = Jul-Sep, Q4 = Oct-Dec
+        data_type: NUMBER
+        expr: QUARTER
+      
+      - name: month
+        synonyms:
+          - "incident month"
+          - "month number"
+        description: Month number (1-12) when incident occurred
+        data_type: NUMBER
+        expr: MONTH
+      
+      - name: week_of_year
+        synonyms:
+          - "week number"
+          - "week"
+        description: Week number (1-52) when incident occurred
+        data_type: NUMBER
+        expr: WEEK_OF_YEAR
+    
+    time_dimensions:
+      - name: incident_timestamp
+        synonyms:
+          - "incident time"
+          - "when incident started"
+          - "start time"
+          - "occurrence time"
+        description: Timestamp when the incident began
+        data_type: TIMESTAMP
+        expr: INCIDENT_TIMESTAMP
+        unique: false
+      
+      - name: resolution_timestamp
+        synonyms:
+          - "resolution time"
+          - "when resolved"
+          - "end time"
+          - "completion time"
+        description: Timestamp when the incident was resolved
+        data_type: TIMESTAMP
+        expr: RESOLUTION_TIMESTAMP
+    
+    measures:
+      - name: incident_count
+        synonyms:
+          - "number of incidents"
+          - "incident volume"
+          - "total incidents"
+          - "count"
+          - "how many incidents"
+        description: Total count of incidents
+        data_type: NUMBER
+        expr: COUNT(*)
+        default_aggregation: sum
+      
+      - name: total_affected_users
+        synonyms:
+          - "affected users"
+          - "impacted users"
+          - "user impact"
+          - "customers affected"
+        description: Total number of users affected by incidents
+        data_type: NUMBER
+        expr: SUM(AFFECTED_USERS)
+        default_aggregation: sum
+      
+      - name: avg_affected_users
+        synonyms:
+          - "average users impacted"
+          - "mean user impact"
+        description: Average number of users affected per incident
+        data_type: NUMBER
+        expr: AVG(AFFECTED_USERS)
+        default_aggregation: avg
+      
+      - name: avg_resolution_time_minutes
+        synonyms:
+          - "average resolution time"
+          - "mean time to resolve"
+          - "MTTR"
+          - "resolution time"
+          - "time to fix"
+        description: >
+          Average time in minutes to resolve incidents.
+          Also known as Mean Time To Resolution (MTTR).
+        data_type: NUMBER
+        expr: AVG(RESOLUTION_TIME_MINUTES)
+        default_aggregation: avg
+      
+      - name: total_resolution_time_minutes
+        synonyms:
+          - "total downtime"
+          - "cumulative resolution time"
+        description: Sum of all resolution times in minutes
+        data_type: NUMBER
+        expr: SUM(RESOLUTION_TIME_MINUTES)
+        default_aggregation: sum
+      
+      - name: max_resolution_time_minutes
+        synonyms:
+          - "longest resolution time"
+          - "worst resolution time"
+          - "maximum time to resolve"
+        description: Longest resolution time for any incident in minutes
+        data_type: NUMBER
+        expr: MAX(RESOLUTION_TIME_MINUTES)
+        default_aggregation: max
+      
+      - name: min_resolution_time_minutes
+        synonyms:
+          - "shortest resolution time"
+          - "fastest resolution"
+          - "minimum time to resolve"
+        description: Shortest resolution time for any incident in minutes
+        data_type: NUMBER
+        expr: MIN(RESOLUTION_TIME_MINUTES)
+        default_aggregation: min
+
+# Verified Query Repository (VQR)
+# Example questions with verified SQL for improved accuracy
+verified_queries:
+  - question: "What are the top 5 incident types by volume?"
+    sql: >
+      SELECT INCIDENT_TYPE, COUNT(*) as INCIDENT_COUNT
+      FROM DEMO_JAM.ENGINEERING_OPS.INCIDENTS
+      GROUP BY INCIDENT_TYPE
+      ORDER BY INCIDENT_COUNT DESC
+      LIMIT 5
+  
+  - question: "Show me critical incidents from last month"
+    sql: >
+      SELECT INCIDENT_ID, INCIDENT_TYPE, SERVICE_NAME, 
+             INCIDENT_TIMESTAMP, RESOLUTION_TIME_MINUTES
+      FROM DEMO_JAM.ENGINEERING_OPS.INCIDENTS
+      WHERE SEVERITY = 'Critical'
+        AND INCIDENT_TIMESTAMP >= DATEADD(month, -1, CURRENT_DATE())
+      ORDER BY INCIDENT_TIMESTAMP DESC
+  
+  - question: "What is the average resolution time by severity?"
+    sql: >
+      SELECT SEVERITY, 
+             AVG(RESOLUTION_TIME_MINUTES) as AVG_RESOLUTION_TIME,
+             COUNT(*) as INCIDENT_COUNT
+      FROM DEMO_JAM.ENGINEERING_OPS.INCIDENTS
+      GROUP BY SEVERITY
+      ORDER BY AVG_RESOLUTION_TIME DESC
+  
+  - question: "Which services had the most incidents this quarter?"
+    sql: >
+      SELECT SERVICE_NAME, COUNT(*) as INCIDENT_COUNT
+      FROM DEMO_JAM.ENGINEERING_OPS.INCIDENTS
+      WHERE QUARTER = QUARTER(CURRENT_DATE())
+        AND YEAR = YEAR(CURRENT_DATE())
+      GROUP BY SERVICE_NAME
+      ORDER BY INCIDENT_COUNT DESC
+      LIMIT 10
+
+# Custom instructions for Cortex Analyst
+custom_instructions:
+  - >
+    When users ask about "this quarter", use the QUARTER and YEAR columns
+    to filter for the current quarter.
+  - >
+    When users ask about time-based comparisons (e.g., "last month vs this month"),
+    use the CREATED_DATE column for date filtering.
+  - >
+    For questions about "recent" incidents without specific timeframe,
+    default to the last 30 days.
+  - >
+    When calculating MTTR or resolution time, use RESOLUTION_TIME_MINUTES.
+  - >
+    Database connection pool issues are a common pattern - be prepared to
+    filter INCIDENT_TYPE for queries mentioning "connection pool".
+  - >
+    Always include INCIDENT_ID in results for traceability.
+
