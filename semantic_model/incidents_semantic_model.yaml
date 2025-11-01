@@ -315,21 +315,20 @@ verified_queries:
       LIMIT 10
 
 # Custom instructions for Cortex Analyst
-custom_instructions:
-  - >
-    When users ask about "this quarter", use the QUARTER and YEAR columns
-    to filter for the current quarter.
-  - >
-    When users ask about time-based comparisons (e.g., "last month vs this month"),
-    use the CREATED_DATE column for date filtering.
-  - >
-    For questions about "recent" incidents without specific timeframe,
-    default to the last 30 days.
-  - >
-    When calculating MTTR or resolution time, use RESOLUTION_TIME_MINUTES.
-  - >
-    Database connection pool issues are a common pattern - be prepared to
-    filter INCIDENT_TYPE for queries mentioning "connection pool".
-  - >
-    Always include INCIDENT_ID in results for traceability.
+custom_instructions: >
+  When users ask about "this quarter", use the QUARTER and YEAR columns
+  to filter for the current quarter.
+  
+  When users ask about time-based comparisons (e.g., "last month vs this month"),
+  use the CREATED_DATE column for date filtering.
+  
+  For questions about "recent" incidents without specific timeframe,
+  default to the last 30 days.
+  
+  When calculating MTTR or resolution time, use RESOLUTION_TIME_MINUTES.
+  
+  Database connection pool issues are a common pattern - be prepared to
+  filter INCIDENT_TYPE for queries mentioning "connection pool".
+  
+  Always include INCIDENT_ID in results for traceability.
 
