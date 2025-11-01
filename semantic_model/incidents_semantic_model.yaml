@@ -205,6 +205,24 @@ tables:
         expr: RESOLUTION_TIMESTAMP
     
     measures:
+      - name: resolution_time_minutes
+        synonyms:
+          - "resolution time"
+          - "time to resolve"
+          - "resolution duration"
+        description: Resolution time in minutes for each incident
+        data_type: NUMBER
+        expr: RESOLUTION_TIME_MINUTES
+      
+      - name: affected_users
+        synonyms:
+          - "number of affected users"
+          - "users impacted"
+          - "user count"
+        description: Number of users affected by each incident
+        data_type: NUMBER
+        expr: AFFECTED_USERS
+      
       - name: incident_count
         synonyms:
           - "number of incidents"
@@ -218,10 +236,10 @@ tables:
       
       - name: total_affected_users
         synonyms:
-          - "affected users"
-          - "impacted users"
-          - "user impact"
-          - "customers affected"
+          - "total affected users"
+          - "sum of affected users"
+          - "total impacted users"
+          - "total user impact"
         description: Total number of users affected by incidents
         data_type: NUMBER
         expr: SUM(AFFECTED_USERS)
@@ -230,6 +248,7 @@ tables:
         synonyms:
           - "average users impacted"
           - "mean user impact"
+          - "average affected users"
         description: Average number of users affected per incident
         data_type: NUMBER
         expr: AVG(AFFECTED_USERS)
@@ -240,7 +259,6 @@ tables:
           - "mean time to resolve"
           - "MTTR"
           - "avg resolution time"
-          - "time to fix"
         description: >
           Average time in minutes to resolve incidents.
           Also known as Mean Time To Resolution (MTTR).
@@ -251,6 +269,7 @@ tables:
         synonyms:
           - "total downtime"
           - "cumulative resolution time"
+          - "sum of resolution time"
         description: Sum of all resolution times in minutes
         data_type: NUMBER
         expr: SUM(RESOLUTION_TIME_MINUTES)
