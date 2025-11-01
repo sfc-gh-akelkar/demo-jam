@@ -13,7 +13,8 @@ USE WAREHOUSE APP_WH;
 -- =====================================================
 
 -- Runbook: Database Connection Pool Management
-INSERT INTO ENGINEERING_DOCS VALUES (
+INSERT INTO ENGINEERING_DOCS 
+SELECT
 'DOC-RB-001',
 'Runbook',
 'Database Connection Pool Management and Troubleshooting',
@@ -132,7 +133,8 @@ PARSE_JSON('{"category": "infrastructure", "criticality": "high", "review_freque
 );
 
 -- Runbook: Service Deployment and Rollback
-INSERT INTO ENGINEERING_DOCS VALUES (
+INSERT INTO ENGINEERING_DOCS 
+SELECT
 'DOC-RB-002',
 'Runbook',
 'Service Deployment and Emergency Rollback Procedures',
@@ -276,7 +278,8 @@ PARSE_JSON('{"category": "operations", "criticality": "high", "review_frequency"
 );
 
 -- Postmortem: Authentication Service Connection Pool Incident
-INSERT INTO ENGINEERING_DOCS VALUES (
+INSERT INTO ENGINEERING_DOCS 
+SELECT
 'DOC-PM-001',
 'Postmortem',
 'Postmortem: Authentication Service Connection Pool Exhaustion - January 5, 2025',
@@ -376,7 +379,8 @@ PARSE_JSON('{"incident_id": "INC-2025-001", "severity": "critical", "lessons_lea
 );
 
 -- Architecture Doc: Database Connection Pooling
-INSERT INTO ENGINEERING_DOCS VALUES (
+INSERT INTO ENGINEERING_DOCS 
+SELECT
 'DOC-ARCH-001',
 'Architecture',
 'Database Connection Pooling Architecture and Best Practices',
@@ -607,7 +611,8 @@ PARSE_JSON('{"category": "architecture", "criticality": "high", "review_frequenc
 );
 
 -- Runbook: Memory Leak Investigation
-INSERT INTO ENGINEERING_DOCS VALUES (
+INSERT INTO ENGINEERING_DOCS 
+SELECT
 'DOC-RB-003',
 'Runbook',
 'Memory Leak Detection and Resolution Guide',
