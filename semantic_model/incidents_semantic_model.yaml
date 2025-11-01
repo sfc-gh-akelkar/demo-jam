@@ -278,7 +278,8 @@ tables:
 # Verified Query Repository (VQR)
 # Example questions with verified SQL for improved accuracy
 verified_queries:
-  - question: "What are the top 5 incident types by volume?"
+  - name: "top_incident_types"
+    question: "What are the top 5 incident types by volume?"
     sql: >
       SELECT INCIDENT_TYPE, COUNT(*) as INCIDENT_COUNT
       FROM DEMO_JAM.ENGINEERING_OPS.INCIDENTS
@@ -286,7 +287,8 @@ verified_queries:
       ORDER BY INCIDENT_COUNT DESC
       LIMIT 5
   
-  - question: "Show me critical incidents from last month"
+  - name: "critical_incidents_last_month"
+    question: "Show me critical incidents from last month"
     sql: >
       SELECT INCIDENT_ID, INCIDENT_TYPE, SERVICE_NAME, 
              INCIDENT_TIMESTAMP, RESOLUTION_TIME_MINUTES
@@ -295,7 +297,8 @@ verified_queries:
         AND INCIDENT_TIMESTAMP >= DATEADD(month, -1, CURRENT_DATE())
       ORDER BY INCIDENT_TIMESTAMP DESC
   
-  - question: "What is the average resolution time by severity?"
+  - name: "avg_resolution_by_severity"
+    question: "What is the average resolution time by severity?"
     sql: >
       SELECT SEVERITY, 
              AVG(RESOLUTION_TIME_MINUTES) as AVG_RESOLUTION_TIME,
@@ -304,7 +307,8 @@ verified_queries:
       GROUP BY SEVERITY
       ORDER BY AVG_RESOLUTION_TIME DESC
   
-  - question: "Which services had the most incidents this quarter?"
+  - name: "services_with_most_incidents"
+    question: "Which services had the most incidents this quarter?"
     sql: >
       SELECT SERVICE_NAME, COUNT(*) as INCIDENT_COUNT
       FROM DEMO_JAM.ENGINEERING_OPS.INCIDENTS
