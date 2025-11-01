@@ -273,49 +273,6 @@ tables:
         data_type: NUMBER
         expr: MIN(RESOLUTION_TIME_MINUTES)
 
-# Verified Query Repository (VQR)
-# Example questions with verified SQL for improved accuracy
-verified_queries:
-  - name: "top_incident_types"
-    question: "What are the top 5 incident types by volume?"
-    sql: >
-      SELECT incident_type, COUNT(*) AS incident_count
-      FROM incidents
-      GROUP BY incident_type
-      ORDER BY incident_count DESC
-      LIMIT 5
-  
-  - name: "critical_incidents_last_month"
-    question: "Show me critical incidents from last month"
-    sql: >
-      SELECT incident_id, incident_type, service_name, 
-             incident_timestamp, resolution_time_minutes
-      FROM __incidents
-      WHERE severity = 'Critical'
-        AND incident_timestamp >= DATEADD(MONTH, -1, CURRENT_DATE)
-      ORDER BY incident_timestamp DESC
-  
-  - name: "avg_resolution_by_severity"
-    question: "What is the average resolution time by severity?"
-    sql: >
-      SELECT severity, 
-             AVG(resolution_time_minutes) AS avg_resolution_time,
-             COUNT(*) AS incident_count
-      FROM __incidents
-      GROUP BY severity
-      ORDER BY avg_resolution_time DESC
-  
-  - name: "services_with_most_incidents"
-    question: "Which services had the most incidents this quarter?"
-    sql: >
-      SELECT service_name, COUNT(*) AS incident_count
-      FROM __incidents
-      WHERE quarter = QUARTER(CURRENT_DATE)
-        AND year = YEAR(CURRENT_DATE)
-      GROUP BY service_name
-      ORDER BY incident_count DESC
-      LIMIT 10
-
 # Custom instructions for Cortex Analyst
 custom_instructions: >
   When users ask about "this quarter", use the QUARTER and YEAR columns
