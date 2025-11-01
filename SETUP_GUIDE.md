@@ -394,6 +394,18 @@ Before your demo, verify all components:
 - Check file path in agent configuration matches exactly
 - Re-upload file if needed
 
+### Issue: "Object does not exist or not authorized" when creating Cortex Search
+**Solution:**
+- Ensure tables are created: `SELECT COUNT(*) FROM ENGINEERING_DOCS;`
+- Check SELECT permissions on tables: `SHOW GRANTS ON TABLE ENGINEERING_DOCS;`
+- Grant SELECT if needed (requires ACCOUNTADMIN or table owner):
+  ```sql
+  USE ROLE ACCOUNTADMIN;
+  GRANT SELECT ON TABLE DEMO_JAM.ENGINEERING_OPS.ENGINEERING_DOCS TO ROLE SF_INTELLIGENCE_DEMO;
+  GRANT SELECT ON TABLE DEMO_JAM.ENGINEERING_OPS.INCIDENTS TO ROLE SF_INTELLIGENCE_DEMO;
+  ```
+- Re-run the Cortex Search creation script
+
 ### Issue: "Warehouse is missing" or "Failed to refresh dynamic table"
 **Solution:**
 - Verify warehouse exists: `SHOW WAREHOUSES LIKE 'APP_WH';`

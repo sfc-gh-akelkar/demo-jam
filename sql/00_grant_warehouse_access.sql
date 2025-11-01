@@ -1,8 +1,8 @@
 -- =====================================================
--- Snowflake Intelligence Demo Jam - Grant Warehouse Access
+-- Snowflake Intelligence Demo Jam - Grant Permissions
 -- =====================================================
--- Purpose: Grant warehouse access to SF_INTELLIGENCE_DEMO role
--- Run this BEFORE running other scripts if you get warehouse errors
+-- Purpose: Grant warehouse and database access to SF_INTELLIGENCE_DEMO role
+-- Run this BEFORE running other scripts if you get permission errors
 -- =====================================================
 
 -- NOTE: You need to run this with a role that has GRANT privileges
@@ -15,14 +15,21 @@ USE ROLE ACCOUNTADMIN;
 GRANT USAGE ON WAREHOUSE APP_WH TO ROLE SF_INTELLIGENCE_DEMO;
 GRANT OPERATE ON WAREHOUSE APP_WH TO ROLE SF_INTELLIGENCE_DEMO;
 
+-- Grant database and schema access
+GRANT USAGE ON DATABASE DEMO_JAM TO ROLE SF_INTELLIGENCE_DEMO;
+GRANT USAGE ON SCHEMA DEMO_JAM.ENGINEERING_OPS TO ROLE SF_INTELLIGENCE_DEMO;
+GRANT CREATE CORTEX SEARCH SERVICE ON SCHEMA DEMO_JAM.ENGINEERING_OPS TO ROLE SF_INTELLIGENCE_DEMO;
+
 -- Verify grants
 SHOW GRANTS TO ROLE SF_INTELLIGENCE_DEMO;
 
 -- Switch back to demo role
 USE ROLE SF_INTELLIGENCE_DEMO;
 
--- Test warehouse access
+-- Test access
 USE WAREHOUSE APP_WH;
+USE DATABASE DEMO_JAM;
+USE SCHEMA ENGINEERING_OPS;
 
-SELECT 'Warehouse access granted successfully!' AS status;
+SELECT 'Permissions granted successfully!' AS status;
 
