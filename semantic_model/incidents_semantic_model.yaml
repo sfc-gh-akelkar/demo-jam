@@ -23,6 +23,10 @@ tables:
       schema: ENGINEERING_OPS
       table: INCIDENTS
     
+    primary_key:
+      columns:
+        - incident_id
+    
     dimensions:
       - name: incident_id
         synonyms:
