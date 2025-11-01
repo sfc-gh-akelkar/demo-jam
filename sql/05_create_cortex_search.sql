@@ -19,6 +19,7 @@ CREATE OR REPLACE CORTEX SEARCH SERVICE ENGINEERING_DOCS_SEARCH
     ATTRIBUTES TITLE, DOC_TYPE, TAGS, AUTHOR
     WAREHOUSE = APP_WH
     TARGET_LAG = '1 minute'
+    COMMENT = 'Semantic search service for engineering documentation'
     AS (
         SELECT 
             DOC_ID,
@@ -30,8 +31,7 @@ CREATE OR REPLACE CORTEX SEARCH SERVICE ENGINEERING_DOCS_SEARCH
             CREATED_TIMESTAMP,
             LAST_UPDATED
         FROM ENGINEERING_DOCS
-    )
-    COMMENT = 'Semantic search service for engineering documentation';
+    );
 
 -- Grant usage permissions to SF_INTELLIGENCE_DEMO (if using different role)
 -- GRANT USAGE ON CORTEX SEARCH SERVICE ENGINEERING_DOCS_SEARCH TO ROLE SF_INTELLIGENCE_DEMO;
