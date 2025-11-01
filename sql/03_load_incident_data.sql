@@ -6,7 +6,7 @@
 
 USE DATABASE DEMO_JAM;
 USE SCHEMA ENGINEERING_OPS;
-USE WAREHOUSE DEMO_JAM_WH;
+USE WAREHOUSE APP_WH;
 
 -- =====================================================
 -- Load Services Catalog (Reference Data)

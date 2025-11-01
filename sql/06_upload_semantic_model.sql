@@ -6,7 +6,7 @@
 
 USE DATABASE DEMO_JAM;
 USE SCHEMA ENGINEERING_OPS;
-USE WAREHOUSE DEMO_JAM_WH;
+USE WAREHOUSE APP_WH;
 
 -- =====================================================
 -- Upload Semantic Model File
@@ -57,7 +57,7 @@ conn = snowflake.connector.connect(
     user='<your_user>',
     password='<your_password>',
     account='<your_account>',
-    warehouse='DEMO_JAM_WH',
+    warehouse='APP_WH',
     database='DEMO_JAM',
     schema='ENGINEERING_OPS'
 )

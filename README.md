@@ -33,6 +33,7 @@ This is a complete, ready-to-execute demo for the Snowflake Intelligence Demo Ja
 
 ### Prerequisites
 - Snowflake account with SF_INTELLIGENCE_DEMO role (or equivalent privileges)
+- Access to APP_WH warehouse (or any existing warehouse)
 - Cortex features enabled in your region
 - Snowflake Intelligence enabled (preview feature)
 - CORTEX_USER database role granted to SF_INTELLIGENCE_DEMO

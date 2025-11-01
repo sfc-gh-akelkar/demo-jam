@@ -10,7 +10,7 @@ This guide walks you through setting up the complete Snowflake Intelligence demo
 
 ### Required Access
 - [ ] Snowflake account with SF_INTELLIGENCE_DEMO role (or equivalent privileges)
-- [ ] Warehouse with compute resources (SMALL or larger)
+- [ ] Access to APP_WH warehouse (or any existing warehouse with compute resources)
 - [ ] Cortex features enabled in your region
 - [ ] Snowflake Intelligence enabled (preview feature)
 - [ ] CORTEX_USER database role granted to SF_INTELLIGENCE_DEMO
@@ -67,7 +67,7 @@ demo-jam/
 
 **Expected result:**
 ```
-Setup Complete! Database: DEMO_JAM, Schema: ENGINEERING_OPS, Warehouse: DEMO_JAM_WH
+Setup Complete! Database: DEMO_JAM, Schema: ENGINEERING_OPS, Warehouse: APP_WH
 ```
 
 **Verify:**
@@ -385,10 +385,10 @@ Before your demo, verify all components:
 - Re-upload file if needed
 
 ### Issue: "Agent not responding or timing out"
-**Solution:**
-- Check warehouse is running: `SHOW WAREHOUSES LIKE 'DEMO_JAM_WH';`
-- Resume warehouse if suspended: `ALTER WAREHOUSE DEMO_JAM_WH RESUME;`
-- Verify role has CORTEX_USER: `SHOW GRANTS TO ROLE ACCOUNTADMIN;`
+**Solution:** 
+- Check warehouse is running: `SHOW WAREHOUSES LIKE 'APP_WH';`
+- Resume warehouse if suspended: `ALTER WAREHOUSE APP_WH RESUME;`
+- Verify role has CORTEX_USER: `SHOW GRANTS TO ROLE SF_INTELLIGENCE_DEMO;`
 
 ### Issue: "Agent only uses one tool"
 **Solution:**
@@ -417,9 +417,13 @@ Before your demo, verify all components:
    -- Run a test Cortex Analyst query via agent
    ```
 
-2. **Keep warehouse running:**
+2. **Keep warehouse running (if needed):**
    ```sql
-   ALTER WAREHOUSE DEMO_JAM_WH SET AUTO_SUSPEND = 300; -- 5 minutes
+   -- Check warehouse status
+   SHOW WAREHOUSES LIKE 'APP_WH';
+   
+   -- Adjust auto-suspend if needed (optional)
+   -- ALTER WAREHOUSE APP_WH SET AUTO_SUSPEND = 300; -- 5 minutes
    ```
 
 3. **Pre-load agent UI:**
@@ -461,8 +465,8 @@ If you want to remove the demo environment:
 -- Drop all objects
 USE ROLE SF_INTELLIGENCE_DEMO;
 DROP DATABASE DEMO_JAM CASCADE;
-DROP WAREHOUSE DEMO_JAM_WH;
 
+-- Note: We're using the existing APP_WH warehouse, so no need to drop it
 -- Note: Cortex Agent needs to be deleted via UI
 -- Go to: AI & ML → Snowflake Intelligence → Your Agent → Delete
 ```
