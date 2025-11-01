@@ -129,8 +129,7 @@ Last Updated: 2025-10-15',
 CURRENT_TIMESTAMP(),
 CURRENT_TIMESTAMP(),
 ARRAY_CONSTRUCT('database', 'connection-pool', 'troubleshooting', 'performance'),
-PARSE_JSON('{"category": "infrastructure", "criticality": "high", "review_frequency": "quarterly"}')
-);
+PARSE_JSON('{"category": "infrastructure", "criticality": "high", "review_frequency": "quarterly"}');
 
 -- Runbook: Service Deployment and Rollback
 INSERT INTO ENGINEERING_DOCS 
@@ -274,8 +273,7 @@ Last Updated: 2025-10-20',
 CURRENT_TIMESTAMP(),
 CURRENT_TIMESTAMP(),
 ARRAY_CONSTRUCT('deployment', 'rollback', 'devops', 'cicd'),
-PARSE_JSON('{"category": "operations", "criticality": "high", "review_frequency": "monthly"}')
-);
+PARSE_JSON('{"category": "operations", "criticality": "high", "review_frequency": "monthly"}');
 
 -- Postmortem: Authentication Service Connection Pool Incident
 INSERT INTO ENGINEERING_DOCS 
@@ -375,8 +373,7 @@ Last Updated: 2025-01-10',
 CURRENT_TIMESTAMP(),
 CURRENT_TIMESTAMP(),
 ARRAY_CONSTRUCT('postmortem', 'database', 'connection-pool', 'authentication', 'incident'),
-PARSE_JSON('{"incident_id": "INC-2025-001", "severity": "critical", "lessons_learned": true}')
-);
+PARSE_JSON('{"incident_id": "INC-2025-001", "severity": "critical", "lessons_learned": true}');
 
 -- Architecture Doc: Database Connection Pooling
 INSERT INTO ENGINEERING_DOCS 
@@ -607,8 +604,7 @@ Last Updated: 2025-09-15',
 CURRENT_TIMESTAMP(),
 CURRENT_TIMESTAMP(),
 ARRAY_CONSTRUCT('architecture', 'database', 'connection-pool', 'best-practices'),
-PARSE_JSON('{"category": "architecture", "criticality": "high", "review_frequency": "semi-annual"}')
-);
+PARSE_JSON('{"category": "architecture", "criticality": "high", "review_frequency": "semi-annual"}');
 
 -- Runbook: Memory Leak Investigation
 INSERT INTO ENGINEERING_DOCS 
@@ -829,8 +825,7 @@ Last Updated: 2025-08-20',
 CURRENT_TIMESTAMP(),
 CURRENT_TIMESTAMP(),
 ARRAY_CONSTRUCT('memory-leak', 'troubleshooting', 'performance', 'debugging'),
-PARSE_JSON('{"category": "troubleshooting", "criticality": "high", "review_frequency": "semi-annual"}')
-);
+PARSE_JSON('{"category": "troubleshooting", "criticality": "high", "review_frequency": "semi-annual"}');
 
 -- Verify documentation loaded
 SELECT 
