@@ -280,7 +280,7 @@ verified_queries:
     question: "What are the top 5 incident types by volume?"
     sql: >
       SELECT incident_type, COUNT(*) AS incident_count
-      FROM __incidents
+      FROM incidents
       GROUP BY incident_type
       ORDER BY incident_count DESC
       LIMIT 5
