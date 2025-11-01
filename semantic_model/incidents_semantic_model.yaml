@@ -199,6 +199,7 @@ tables:
           - "when resolved"
           - "end time"
           - "completion time"
+          - "resolved at"
         description: Timestamp when the incident was resolved
         data_type: TIMESTAMP
         expr: RESOLUTION_TIMESTAMP
@@ -241,7 +242,7 @@ tables:
           - "average resolution time"
           - "mean time to resolve"
           - "MTTR"
-          - "resolution time"
+          - "avg resolution time"
           - "time to fix"
         description: >
           Average time in minutes to resolve incidents.
@@ -285,41 +286,41 @@ verified_queries:
   - name: "top_incident_types"
     question: "What are the top 5 incident types by volume?"
     sql: >
-      SELECT INCIDENT_TYPE, COUNT(*) as INCIDENT_COUNT
-      FROM DEMO_JAM.ENGINEERING_OPS.INCIDENTS
-      GROUP BY INCIDENT_TYPE
-      ORDER BY INCIDENT_COUNT DESC
+      SELECT incident_type, COUNT(*) AS incident_count
+      FROM __incidents
+      GROUP BY incident_type
+      ORDER BY incident_count DESC
       LIMIT 5
   
   - name: "critical_incidents_last_month"
     question: "Show me critical incidents from last month"
     sql: >
-      SELECT INCIDENT_ID, INCIDENT_TYPE, SERVICE_NAME, 
-             INCIDENT_TIMESTAMP, RESOLUTION_TIME_MINUTES
-      FROM DEMO_JAM.ENGINEERING_OPS.INCIDENTS
-      WHERE SEVERITY = 'Critical'
-        AND INCIDENT_TIMESTAMP >= DATEADD(month, -1, CURRENT_DATE())
-      ORDER BY INCIDENT_TIMESTAMP DESC
+      SELECT incident_id, incident_type, service_name, 
+             incident_timestamp, resolution_time_minutes
+      FROM __incidents
+      WHERE severity = 'Critical'
+        AND incident_timestamp >= DATEADD(MONTH, -1, CURRENT_DATE)
+      ORDER BY incident_timestamp DESC
   
   - name: "avg_resolution_by_severity"
     question: "What is the average resolution time by severity?"
     sql: >
-      SELECT SEVERITY, 
-             AVG(RESOLUTION_TIME_MINUTES) as AVG_RESOLUTION_TIME,
-             COUNT(*) as INCIDENT_COUNT
-      FROM DEMO_JAM.ENGINEERING_OPS.INCIDENTS
-      GROUP BY SEVERITY
-      ORDER BY AVG_RESOLUTION_TIME DESC
+      SELECT severity, 
+             AVG(resolution_time_minutes) AS avg_resolution_time,
+             COUNT(*) AS incident_count
+      FROM __incidents
+      GROUP BY severity
+      ORDER BY avg_resolution_time DESC
   
   - name: "services_with_most_incidents"
     question: "Which services had the most incidents this quarter?"
     sql: >
-      SELECT SERVICE_NAME, COUNT(*) as INCIDENT_COUNT
-      FROM DEMO_JAM.ENGINEERING_OPS.INCIDENTS
-      WHERE QUARTER = QUARTER(CURRENT_DATE())
-        AND YEAR = YEAR(CURRENT_DATE())
-      GROUP BY SERVICE_NAME
-      ORDER BY INCIDENT_COUNT DESC
+      SELECT service_name, COUNT(*) AS incident_count
+      FROM __incidents
+      WHERE quarter = QUARTER(CURRENT_DATE)
+        AND year = YEAR(CURRENT_DATE)
+      GROUP BY service_name
+      ORDER BY incident_count DESC
       LIMIT 10
 
 # Custom instructions for Cortex Analyst
