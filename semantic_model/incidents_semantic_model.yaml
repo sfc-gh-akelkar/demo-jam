@@ -207,9 +207,9 @@ tables:
     measures:
       - name: resolution_time_minutes
         synonyms:
-          - "resolution time"
           - "time to resolve"
           - "resolution duration"
+          - "minutes to resolve"
         description: Resolution time in minutes for each incident
         data_type: NUMBER
         expr: RESOLUTION_TIME_MINUTES
@@ -222,17 +222,6 @@ tables:
         description: Number of users affected by each incident
         data_type: NUMBER
         expr: AFFECTED_USERS
-      
-      - name: incident_count
-        synonyms:
-          - "number of incidents"
-          - "incident volume"
-          - "total incidents"
-          - "count"
-          - "how many incidents"
-        description: Total count of incidents
-        data_type: NUMBER
-        expr: COUNT(*)
       
       - name: total_affected_users
         synonyms:
