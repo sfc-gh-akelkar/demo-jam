@@ -215,7 +215,6 @@ tables:
         description: Total count of incidents
         data_type: NUMBER
         expr: COUNT(*)
-        default_aggregation: sum
       
       - name: total_affected_users
         synonyms:
@@ -226,7 +225,6 @@ tables:
         description: Total number of users affected by incidents
         data_type: NUMBER
         expr: SUM(AFFECTED_USERS)
-        default_aggregation: sum
       
       - name: avg_affected_users
         synonyms:
@@ -235,7 +233,6 @@ tables:
         description: Average number of users affected per incident
         data_type: NUMBER
         expr: AVG(AFFECTED_USERS)
-        default_aggregation: avg
       
       - name: avg_resolution_time_minutes
         synonyms:
@@ -249,7 +246,6 @@ tables:
           Also known as Mean Time To Resolution (MTTR).
         data_type: NUMBER
         expr: AVG(RESOLUTION_TIME_MINUTES)
-        default_aggregation: avg
       
       - name: total_resolution_time_minutes
         synonyms:
@@ -258,7 +254,6 @@ tables:
         description: Sum of all resolution times in minutes
         data_type: NUMBER
         expr: SUM(RESOLUTION_TIME_MINUTES)
-        default_aggregation: sum
       
       - name: max_resolution_time_minutes
         synonyms:
@@ -268,7 +263,6 @@ tables:
         description: Longest resolution time for any incident in minutes
         data_type: NUMBER
         expr: MAX(RESOLUTION_TIME_MINUTES)
-        default_aggregation: max
       
       - name: min_resolution_time_minutes
         synonyms:
@@ -278,7 +272,6 @@ tables:
         description: Shortest resolution time for any incident in minutes
         data_type: NUMBER
         expr: MIN(RESOLUTION_TIME_MINUTES)
-        default_aggregation: min
 
 # Verified Query Repository (VQR)
 # Example questions with verified SQL for improved accuracy
