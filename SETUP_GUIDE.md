@@ -11,6 +11,7 @@ This guide walks you through setting up the complete Snowflake Intelligence demo
 ### Required Access
 - [ ] Snowflake account with SF_INTELLIGENCE_DEMO role (or equivalent privileges)
 - [ ] Access to APP_WH warehouse (or any existing warehouse with compute resources)
+- [ ] USAGE and OPERATE privileges on APP_WH warehouse for SF_INTELLIGENCE_DEMO role
 - [ ] Cortex features enabled in your region
 - [ ] Snowflake Intelligence enabled (preview feature)
 - [ ] CORTEX_USER database role granted to SF_INTELLIGENCE_DEMO
@@ -24,6 +25,15 @@ This guide walks you through setting up the complete Snowflake Intelligence demo
 ```sql
 -- Use the demo role
 USE ROLE SF_INTELLIGENCE_DEMO;
+
+-- Verify warehouse access
+SHOW WAREHOUSES LIKE 'APP_WH';
+USE WAREHOUSE APP_WH;
+
+-- If you get an error, you need to grant warehouse access
+-- Switch to a role that can grant privileges (like ACCOUNTADMIN), then run:
+-- GRANT USAGE ON WAREHOUSE APP_WH TO ROLE SF_INTELLIGENCE_DEMO;
+-- GRANT OPERATE ON WAREHOUSE APP_WH TO ROLE SF_INTELLIGENCE_DEMO;
 
 -- Check if Cortex features are available
 SELECT SYSTEM$CORTEX_ENABLED() AS cortex_status;
@@ -383,6 +393,18 @@ Before your demo, verify all components:
 - Verify upload: `LIST @DEMO_STAGE;`
 - Check file path in agent configuration matches exactly
 - Re-upload file if needed
+
+### Issue: "Warehouse is missing" or "Failed to refresh dynamic table"
+**Solution:**
+- Verify warehouse exists: `SHOW WAREHOUSES LIKE 'APP_WH';`
+- Check role has warehouse access: `SHOW GRANTS ON WAREHOUSE APP_WH;`
+- Grant access if needed (requires ACCOUNTADMIN or similar):
+  ```sql
+  USE ROLE ACCOUNTADMIN;  -- Or another role with GRANT privileges
+  GRANT USAGE ON WAREHOUSE APP_WH TO ROLE SF_INTELLIGENCE_DEMO;
+  GRANT OPERATE ON WAREHOUSE APP_WH TO ROLE SF_INTELLIGENCE_DEMO;
+  USE ROLE SF_INTELLIGENCE_DEMO;  -- Switch back
+  ```
 
 ### Issue: "Agent not responding or timing out"
 **Solution:** 

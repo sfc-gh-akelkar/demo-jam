@@ -15,8 +15,15 @@ USE DATABASE DEMO_JAM;
 CREATE SCHEMA IF NOT EXISTS ENGINEERING_OPS;
 USE SCHEMA ENGINEERING_OPS;
 
--- Use existing warehouse
+-- Use existing warehouse (ensure role has access)
 USE WAREHOUSE APP_WH;
+
+-- Verify warehouse access
+SHOW WAREHOUSES LIKE 'APP_WH';
+
+-- If you get an error about warehouse access, you may need to grant usage:
+-- GRANT USAGE ON WAREHOUSE APP_WH TO ROLE SF_INTELLIGENCE_DEMO;
+-- GRANT OPERATE ON WAREHOUSE APP_WH TO ROLE SF_INTELLIGENCE_DEMO;
 
 -- Grant Cortex permissions (if not already granted)
 -- GRANT DATABASE ROLE SNOWFLAKE.CORTEX_USER TO ROLE SF_INTELLIGENCE_DEMO;

@@ -43,7 +43,10 @@ This is a complete, ready-to-execute demo for the Snowflake Intelligence Demo Ja
 ```bash
 # 1. Navigate to your Snowsight UI
 
-# 2. Run SQL scripts in order (01 through 05)
+# 2. First, grant warehouse access (if needed)
+#    Run sql/00_grant_warehouse_access.sql with ACCOUNTADMIN role
+
+# 3. Run SQL scripts in order (01 through 05)
 #    Copy/paste each script into a worksheet and execute
 
 # 3. Upload semantic model
