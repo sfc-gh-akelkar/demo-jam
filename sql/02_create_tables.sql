@@ -31,11 +31,10 @@ CREATE OR REPLACE TABLE INCIDENTS (
     WEEK_OF_YEAR NUMBER(2) NOT NULL
 ) COMMENT = 'Production incident tracking for engineering operations';
 
--- Create indexes for better query performance
-CREATE INDEX IF NOT EXISTS IDX_INCIDENT_TYPE ON INCIDENTS(INCIDENT_TYPE);
-CREATE INDEX IF NOT EXISTS IDX_SEVERITY ON INCIDENTS(SEVERITY);
-CREATE INDEX IF NOT EXISTS IDX_SERVICE_NAME ON INCIDENTS(SERVICE_NAME);
-CREATE INDEX IF NOT EXISTS IDX_CREATED_DATE ON INCIDENTS(CREATED_DATE);
+-- Note: Snowflake does not support traditional indexes
+-- Query performance is optimized through automatic micro-partitions and clustering keys
+-- Optionally, you can add a clustering key for frequently filtered columns:
+-- ALTER TABLE INCIDENTS CLUSTER BY (CREATED_DATE, SEVERITY);
 
 -- =====================================================
 -- UNSTRUCTURED DATA: Engineering Documents

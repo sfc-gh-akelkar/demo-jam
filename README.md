@@ -32,9 +32,10 @@ This is a complete, ready-to-execute demo for the Snowflake Intelligence Demo Ja
 ## ⚡ Quick Setup (30-45 minutes)
 
 ### Prerequisites
-- Snowflake account with ACCOUNTADMIN access
+- Snowflake account with SF_INTELLIGENCE_DEMO role (or equivalent privileges)
 - Cortex features enabled in your region
 - Snowflake Intelligence enabled (preview feature)
+- CORTEX_USER database role granted to SF_INTELLIGENCE_DEMO
 
 ### Setup Steps
 

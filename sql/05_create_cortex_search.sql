@@ -33,8 +33,8 @@ CREATE OR REPLACE CORTEX SEARCH SERVICE ENGINEERING_DOCS_SEARCH
     )
     COMMENT = 'Semantic search service for engineering documentation';
 
--- Grant usage permissions to ACCOUNTADMIN
-GRANT USAGE ON CORTEX SEARCH SERVICE ENGINEERING_DOCS_SEARCH TO ROLE ACCOUNTADMIN;
+-- Grant usage permissions to SF_INTELLIGENCE_DEMO (if using different role)
+-- GRANT USAGE ON CORTEX SEARCH SERVICE ENGINEERING_DOCS_SEARCH TO ROLE SF_INTELLIGENCE_DEMO;
 
 -- Wait for initial indexing
 -- Note: In real demo, wait 1-2 minutes for service to be ready

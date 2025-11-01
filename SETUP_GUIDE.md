@@ -9,10 +9,11 @@ This guide walks you through setting up the complete Snowflake Intelligence demo
 ## Prerequisites
 
 ### Required Access
-- [ ] Snowflake account with ACCOUNTADMIN role (or equivalent)
+- [ ] Snowflake account with SF_INTELLIGENCE_DEMO role (or equivalent privileges)
 - [ ] Warehouse with compute resources (SMALL or larger)
 - [ ] Cortex features enabled in your region
 - [ ] Snowflake Intelligence enabled (preview feature)
+- [ ] CORTEX_USER database role granted to SF_INTELLIGENCE_DEMO
 
 ### Required Tools
 - [ ] Snowsight web UI access
@@ -21,6 +22,9 @@ This guide walks you through setting up the complete Snowflake Intelligence demo
 
 ### Verify Cortex Availability
 ```sql
+-- Use the demo role
+USE ROLE SF_INTELLIGENCE_DEMO;
+
 -- Check if Cortex features are available
 SELECT SYSTEM$CORTEX_ENABLED() AS cortex_status;
 
@@ -455,7 +459,7 @@ If you want to remove the demo environment:
 
 ```sql
 -- Drop all objects
-USE ROLE ACCOUNTADMIN;
+USE ROLE SF_INTELLIGENCE_DEMO;
 DROP DATABASE DEMO_JAM CASCADE;
 DROP WAREHOUSE DEMO_JAM_WH;
 

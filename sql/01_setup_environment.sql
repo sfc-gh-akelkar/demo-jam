@@ -6,7 +6,7 @@
 -- =====================================================
 
 -- Set context
-USE ROLE ACCOUNTADMIN;
+USE ROLE SF_INTELLIGENCE_DEMO;
 
 -- Create database and schema
 CREATE DATABASE IF NOT EXISTS DEMO_JAM;
@@ -25,8 +25,8 @@ CREATE WAREHOUSE IF NOT EXISTS DEMO_JAM_WH
 
 USE WAREHOUSE DEMO_JAM_WH;
 
--- Grant Cortex permissions
-GRANT DATABASE ROLE SNOWFLAKE.CORTEX_USER TO ROLE ACCOUNTADMIN;
+-- Grant Cortex permissions (if not already granted)
+-- GRANT DATABASE ROLE SNOWFLAKE.CORTEX_USER TO ROLE SF_INTELLIGENCE_DEMO;
 
 -- Create stage for semantic model and unstructured data
 CREATE STAGE IF NOT EXISTS DEMO_STAGE

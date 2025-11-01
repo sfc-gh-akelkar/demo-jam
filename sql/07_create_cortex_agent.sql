@@ -98,7 +98,7 @@ Add these sample questions to help users get started:
 STEP 6: Access Control
 ------------------------------------------------------------
 Grant access to:
-- ACCOUNTADMIN role
+- SF_INTELLIGENCE_DEMO role
 - Any additional roles that need demo access
 
 STEP 7: Save and Test
@@ -141,6 +141,7 @@ SELECT COUNT(*) as doc_count FROM ENGINEERING_DOCS;
 
 -- Check agent exists (run after creating in UI)
 -- Note: Replace 'ENGINEERING_OPERATIONS_AGENT' with your actual agent name
+USE ROLE SF_INTELLIGENCE_DEMO;
 SHOW CORTEX AGENTS LIKE 'ENGINEERING_OPERATIONS_AGENT';
 
 SELECT 'All components ready for Cortex Agent!' AS status;
