@@ -89,7 +89,7 @@ Show me what our runbooks say about database connection pool troubleshooting
 
 **Query 3:**
 ```
-Compare last month's database connection pool incidents with what our runbooks recommend for mitigation
+Compare database connection pool incidents with what our runbooks recommend for mitigation
 ```
 
 **Type and hit enter, then while results load, say:**
