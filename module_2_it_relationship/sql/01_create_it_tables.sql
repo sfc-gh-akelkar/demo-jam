@@ -1,0 +1,110 @@
+-- =====================================================
+-- Module 2: IT Relationship & Value Management
+-- Table Creation Script
+-- =====================================================
+-- Purpose: Create tables for IT support, projects, and roadmap
+-- =====================================================
+
+USE DATABASE DEMO_JAM;
+USE SCHEMA ENGINEERING_OPS;
+USE WAREHOUSE APP_WH;
+
+-- =====================================================
+-- IT SUPPORT TICKETS
+-- =====================================================
+
+CREATE OR REPLACE TABLE IT_SUPPORT_TICKETS (
+    TICKET_ID VARCHAR(50) PRIMARY KEY,
+    BUSINESS_UNIT VARCHAR(100) NOT NULL,
+    TICKET_TYPE VARCHAR(100) NOT NULL,
+    PRIORITY VARCHAR(20) NOT NULL,
+    STATUS VARCHAR(50) NOT NULL,
+    CREATED_DATE DATE NOT NULL,
+    RESOLVED_DATE DATE,
+    RESOLUTION_TIME_HOURS NUMBER(10,2),
+    ASSIGNED_TO VARCHAR(100),
+    ASSIGNED_TEAM VARCHAR(100),
+    REQUESTOR_NAME VARCHAR(200),
+    REQUESTOR_EMAIL VARCHAR(200),
+    SUBJECT VARCHAR(500),
+    DESCRIPTION VARCHAR(5000),
+    RESOLUTION_NOTES VARCHAR(5000),
+    YEAR NUMBER(4) NOT NULL,
+    QUARTER NUMBER(1) NOT NULL,
+    MONTH NUMBER(2) NOT NULL,
+    WEEK_OF_YEAR NUMBER(2) NOT NULL
+) COMMENT = 'IT Support tickets from all business units';
+
+-- =====================================================
+-- IT PROJECTS
+-- =====================================================
+
+CREATE OR REPLACE TABLE IT_PROJECTS (
+    PROJECT_ID VARCHAR(50) PRIMARY KEY,
+    PROJECT_NAME VARCHAR(500) NOT NULL,
+    BUSINESS_UNIT VARCHAR(100) NOT NULL,
+    PROJECT_TYPE VARCHAR(100) NOT NULL,
+    STATUS VARCHAR(50) NOT NULL,
+    PRIORITY VARCHAR(20),
+    BUDGET_ALLOCATED NUMBER(12,2),
+    BUDGET_SPENT NUMBER(12,2),
+    BUDGET_REMAINING NUMBER(12,2),
+    START_DATE DATE,
+    TARGET_END_DATE DATE,
+    ACTUAL_END_DATE DATE,
+    PERCENT_COMPLETE NUMBER(5,2),
+    PROJECT_MANAGER VARCHAR(200),
+    TECHNICAL_LEAD VARCHAR(200),
+    TEAM_SIZE NUMBER(3,0),
+    EXPECTED_BUSINESS_VALUE VARCHAR(5000),
+    SUCCESS_METRICS VARCHAR(5000),
+    RISKS VARCHAR(5000),
+    YEAR NUMBER(4) NOT NULL,
+    QUARTER NUMBER(1) NOT NULL
+) COMMENT = 'IT Project portfolio tracking';
+
+-- =====================================================
+-- APPLICATION ROADMAP
+-- =====================================================
+
+CREATE OR REPLACE TABLE APP_ROADMAP (
+    ROADMAP_ID VARCHAR(50) PRIMARY KEY,
+    APPLICATION_NAME VARCHAR(200) NOT NULL,
+    APPLICATION_TYPE VARCHAR(100),
+    FEATURE_NAME VARCHAR(500) NOT NULL,
+    FEATURE_DESCRIPTION VARCHAR(5000),
+    FEATURE_CATEGORY VARCHAR(100),
+    RELEASE_QUARTER VARCHAR(10) NOT NULL,
+    RELEASE_DATE DATE,
+    ACTUAL_RELEASE_DATE DATE,
+    BUSINESS_VALUE VARCHAR(5000),
+    BUSINESS_UNIT VARCHAR(100),
+    STATUS VARCHAR(50) NOT NULL,
+    PRIORITY VARCHAR(20),
+    DEVELOPMENT_TEAM VARCHAR(100),
+    ESTIMATED_EFFORT_DAYS NUMBER(5,0),
+    DEPENDENCIES VARCHAR(2000)
+) COMMENT = 'Application feature roadmap for business communication';
+
+-- =====================================================
+-- IT DOCUMENTATION (reusing pattern from Module 1)
+-- =====================================================
+
+CREATE OR REPLACE TABLE IT_DOCUMENTATION (
+    DOC_ID VARCHAR(50) PRIMARY KEY,
+    DOC_TYPE VARCHAR(50) NOT NULL,
+    TITLE VARCHAR(500) NOT NULL,
+    CONTENT VARCHAR(16777216) NOT NULL,
+    BUSINESS_UNIT VARCHAR(100),
+    AUTHOR VARCHAR(100),
+    CREATED_TIMESTAMP TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+    LAST_UPDATED TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+    TAGS ARRAY,
+    METADATA VARIANT
+) COMMENT = 'IT policies, project charters, and governance documentation';
+
+-- Verify tables created
+SHOW TABLES LIKE 'IT_%' IN DEMO_JAM.ENGINEERING_OPS;
+
+SELECT 'Module 2 tables created successfully!' AS status;
+

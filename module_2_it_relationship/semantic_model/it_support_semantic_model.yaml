@@ -1,0 +1,188 @@
+# =====================================================
+# Semantic Model: IT Support Tickets
+# =====================================================
+# Purpose: Enable natural language queries on IT support performance
+# Target Use Case: IT performance analysis by business unit
+# =====================================================
+
+name: it_support_tickets
+
+custom_instructions: >
+  When analyzing IT support performance, focus on comparing metrics across business units.
+  Calculate resolution time in both hours and days for readability.
+  Healthcare is a critical business unit requiring special attention to performance.
+  Priority tickets (Critical, High) should be tracked separately from routine requests.
+
+tables:
+  - name: it_support_tickets
+    description: >
+      IT support tickets from all business units including helpdesk requests,
+      access requests, software issues, hardware issues, and performance problems.
+      Tracks resolution times and ticket status.
+
+    base_table:
+      database: DEMO_JAM
+      schema: ENGINEERING_OPS
+      table: IT_SUPPORT_TICKETS
+
+    primary_key:
+      columns:
+        - ticket_id
+
+    dimensions:
+      - name: ticket_id
+        synonyms:
+          - "ticket number"
+          - "ticket identifier"
+          - "request ID"
+        description: Unique identifier for each support ticket
+        data_type: VARCHAR
+        expr: TICKET_ID
+        unique: true
+
+      - name: business_unit
+        synonyms:
+          - "department"
+          - "business unit"
+          - "organization"
+          - "division"
+        description: Business unit that submitted the ticket (Healthcare, Finance, Sales, Marketing, HR, Operations)
+        data_type: VARCHAR
+        expr: BUSINESS_UNIT
+        sample_values:
+          - Healthcare
+          - Finance
+          - Sales
+          - Marketing
+          - HR
+          - Operations
+
+      - name: ticket_type
+        synonyms:
+          - "issue type"
+          - "request type"
+          - "ticket category"
+        description: Type of support request (Access Request, Software Issue, Hardware Issue, Performance Issue, Network Issue)
+        data_type: VARCHAR
+        expr: TICKET_TYPE
+        sample_values:
+          - Access Request
+          - Software Issue
+          - Hardware Issue
+          - Performance Issue
+          - Network Issue
+          - Software Request
+          - Hardware Request
+
+      - name: priority
+        synonyms:
+          - "urgency"
+          - "importance"
+          - "severity"
+        description: Ticket priority level (Critical, High, Medium, Low)
+        data_type: VARCHAR
+        expr: PRIORITY
+        sample_values:
+          - Critical
+          - High
+          - Medium
+          - Low
+
+      - name: status
+        synonyms:
+          - "ticket status"
+          - "resolution status"
+          - "state"
+        description: Current status of the ticket (Resolved, In Progress, Pending, Closed)
+        data_type: VARCHAR
+        expr: STATUS
+
+      - name: assigned_team
+        synonyms:
+          - "support team"
+          - "IT team"
+          - "responsible team"
+        description: IT team assigned to resolve the ticket
+        data_type: VARCHAR
+        expr: ASSIGNED_TEAM
+        sample_values:
+          - IT Support Team
+          - Application Support
+          - Network Team
+
+      - name: created_date
+        synonyms:
+          - "submission date"
+          - "ticket creation date"
+          - "request date"
+        description: Date the ticket was created
+        data_type: DATE
+        expr: CREATED_DATE
+
+      - name: resolved_date
+        synonyms:
+          - "completion date"
+          - "closure date"
+          - "resolution date"
+        description: Date the ticket was resolved
+        data_type: DATE
+        expr: RESOLVED_DATE
+
+      - name: year
+        synonyms:
+          - "calendar year"
+        description: Year of ticket creation
+        data_type: NUMBER
+        expr: YEAR
+
+      - name: quarter
+        synonyms:
+          - "fiscal quarter"
+          - "Q1, Q2, Q3, Q4"
+        description: Quarter of ticket creation (1-4)
+        data_type: NUMBER
+        expr: QUARTER
+
+      - name: month
+        synonyms:
+          - "calendar month"
+        description: Month of ticket creation (1-12)
+        data_type: NUMBER
+        expr: MONTH
+
+    measures:
+      - name: resolution_time_hours
+        synonyms:
+          - "time to resolve in hours"
+          - "resolution duration"
+          - "time to fix"
+        description: Time taken to resolve each ticket in hours
+        data_type: NUMBER
+        expr: RESOLUTION_TIME_HOURS
+
+      - name: avg_resolution_time_hours
+        synonyms:
+          - "average resolution time"
+          - "mean time to resolve"
+          - "average fix time"
+        description: Average time to resolve tickets in hours
+        data_type: NUMBER
+        expr: AVG(RESOLUTION_TIME_HOURS)
+
+      - name: avg_resolution_time_days
+        synonyms:
+          - "average resolution days"
+          - "mean days to resolve"
+        description: Average time to resolve tickets in days (hours / 24)
+        data_type: NUMBER
+        expr: AVG(RESOLUTION_TIME_HOURS) / 24
+
+      - name: ticket_count
+        synonyms:
+          - "number of tickets"
+          - "ticket volume"
+          - "total tickets"
+        description: Count of support tickets
+        data_type: NUMBER
+        expr: COUNT(*)
+
