@@ -17,7 +17,7 @@ Before starting the demo, ensure:
 
 ### Opening Hook (30 seconds)
 **Say:**
-> "Picture this: It's the day after a major P1 incident. You're in the post-mortem meeting and your team needs to understand: 'Have we seen similar database timeout patterns before?' AND 'What do our runbooks say we should have done differently?' Today, that requires digging through Jira, Confluence, old Slack threads, and tribal knowledge—hours of work across fragmented systems. With Snowflake Intelligence, you get both answers in seconds—in plain English."
+> "Picture this: It's the day after a major P1 database incident. You're in the post-mortem meeting and your team needs to understand: 'Have we seen similar database timeout patterns before?' AND 'What do our runbooks say we should have done differently?' Today, that requires digging through Jira, Confluence, old Slack threads, and tribal knowledge—hours of work across fragmented systems. With Snowflake Intelligence, you get both answers in seconds—in plain English."
 
 **Action:** Show Snowflake Intelligence UI (already open)
 
