@@ -59,6 +59,7 @@ INSERT INTO IT_PROJECTS SELECT
 'Healthcare',
 'Governance & Compliance',
 'In Progress',
+'High',
 425000.00,
 290000.00,
 135000.00,
