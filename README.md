@@ -121,6 +121,14 @@ Search Service: ENGINEERING_DOCS_SEARCH
 Description: Search engineering runbooks, postmortems, architecture docs
 ```
 
+#### Tool 4: IT Documentation (Cortex Search)
+```
+Name: it_docs_search
+Type: Cortex Search
+Search Service: IT_DOCS_SEARCH
+Description: Search IT policies, SLAs, project governance, best practices
+```
+
 4. **Agent Instructions:**
 ```
 You are an intelligent assistant for engineering and IT leadership.
