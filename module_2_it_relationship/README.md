@@ -20,6 +20,8 @@ This module demonstrates how IT leadership can use Snowflake Intelligence to:
 ## What's Included
 
 ### Tables
+
+**Structured Data:**
 1. **IT_SUPPORT_TICKETS** - 16+ IT support tickets
    - 6 business units (Healthcare, Finance, Sales, Marketing, HR, Operations)
    - Multiple ticket types (Access Request, Software Issue, Hardware Issue, etc.)
@@ -41,9 +43,17 @@ This module demonstrates how IT leadership can use Snowflake Intelligence to:
    - Release quarters and priorities
    - Business value descriptions
 
+**Unstructured Data:**
+5. **IT_DOCUMENTATION** - IT policies and governance
+   - IT Service Level Agreements (SLA targets, escalation)
+   - Project prioritization framework
+   - ROI measurement methodology
+   - IT support best practices
+
 ### Cortex Components
 - **Cortex Analyst** - Natural language to SQL on IT metrics and ROI data
-- **Cortex Agent** - Orchestrates across multiple data domains
+- **Cortex Search** - Semantic search across IT policies and SLAs
+- **Cortex Agent** - Orchestrates across structured data AND unstructured documentation
 
 ### Semantic Model
 - **`module_2_semantic_model.yaml`** (Consolidated) - Covers all Module 2 tables
@@ -96,7 +106,19 @@ CREATE OR REPLACE TABLE PROJECT_ROI_METRICS (...);
 -- Loads 13 metrics with baseline/current/target values
 -- Total annual value: $17.5M+
 
--- Step 7: Upload semantic model
+-- Step 7: Load IT documentation (policies, SLAs)
+-- File: sql/07_load_it_sla_documentation.sql
+-- Loads IT SLA policies, project governance, ROI framework
+
+-- Step 8: Create Cortex Search Service for IT documentation
+-- File: sql/08_create_cortex_search.sql
+CREATE OR REPLACE CORTEX SEARCH SERVICE IT_DOCS_SEARCH
+    ON CONTENT
+    ATTRIBUTES TITLE, DOC_TYPE, TAGS, AUTHOR
+    WAREHOUSE = APP_WH
+    AS (SELECT DOC_ID, CONTENT, TITLE, DOC_TYPE, TAGS, AUTHOR FROM IT_DOCUMENTATION);
+
+-- Step 9: Upload semantic model
 -- File: semantic_model/module_2_semantic_model.yaml
 -- Upload to @DEMO_JAM.ENGINEERING_OPS.DEMO_STAGE
 -- (See upload instructions below)
@@ -149,24 +171,32 @@ Add Module 2 tools to your existing Cortex Agent:
 
 1. Navigate to your existing agent: **Intelligence** → **Cortex Agents** → *Your Agent*
 
-2. **Add Tool: IT Relationship Analyst**
+2. **Add Tool #1: IT Relationship Analyst**
    - Type: Cortex Analyst
    - Semantic Model: `@DEMO_STAGE/module_2_semantic_model.yaml`
    - Description: Query IT support performance, project ROI, and application roadmap
 
-3. **Update Agent Instructions** (add to existing):
+3. **Add Tool #2: IT Documentation Search**
+   - Type: Cortex Search
+   - Search Service: `IT_DOCS_SEARCH`
+   - Description: Search IT policies, SLAs, project governance, and best practices
+
+4. **Update Agent Instructions** (add to existing):
 ```
 You also have access to:
 - IT support ticket data (performance by business unit)
 - IT project portfolio (budgets, ROI, success metrics)
 - Application roadmap (planned features and release schedules)
+- IT policies and documentation (SLAs, governance, best practices)
 
 For IT-related questions:
 - Compare support performance across business units (Healthcare is critical)
 - Analyze project ROI and quantifiable business value
 - Track progress on success metrics (baseline → current → target)
 - Identify at-risk metrics needing attention
-- Correlate IT support performance with business unit project activity
+- Reference IT SLAs and policies when discussing support performance
+- Explain project prioritization and governance frameworks
+- Search documentation for policies, procedures, and best practices
 ```
 
 ---
@@ -410,11 +440,11 @@ module_2_it_relationship/
 │   ├── 03_load_it_projects_data.sql
 │   ├── 04_load_app_roadmap_data.sql
 │   ├── 05_create_project_roi_table.sql
-│   └── 06_load_project_roi_data.sql
+│   ├── 06_load_project_roi_data.sql
+│   ├── 07_load_it_sla_documentation.sql (NEW!)
+│   └── 08_create_cortex_search.sql (NEW!)
 └── semantic_model/
     ├── module_2_semantic_model.yaml (RECOMMENDED - consolidated)
-    ├── it_support_semantic_model.yaml (legacy)
-    ├── project_roi_semantic_model.yaml (legacy)
     └── README.md (semantic model documentation)
 ```
 
