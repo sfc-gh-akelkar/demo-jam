@@ -23,6 +23,12 @@ This module demonstrates how IT leadership (CIO, IT Director) can use Snowflake 
   - Project status and timelines
   - Expected business value
   
+- **PROJECT_ROI_METRICS**: 🆕 Detailed ROI tracking
+  - Multiple success metrics per project
+  - Baseline → Current → Target progress
+  - Numeric ROI projections ($)
+  - Metric types: efficiency, cost savings, revenue impact, quality, satisfaction
+  
 - **APP_ROADMAP**: Application feature roadmap
   - Planned features by quarter
   - Business value articulation
@@ -52,17 +58,30 @@ What is the average time-to-resolution for Healthcare IT tickets vs other busine
 Show me all active IT projects for the Healthcare business unit, their budgets, and current status
 ```
 
-### Query 3: ROI & Business Value
+### Query 3: 🆕 ROI & Business Value (ENHANCED!)
 ```
 What is the expected business value and ROI of the Field Service Management project?
 ```
+**Now returns:** Detailed breakdown of 4 success metrics: equipment uptime ($2.1M), technician productivity ($450K), customer satisfaction, and mean time to repair ($850K)
 
-### Query 4: Application Roadmap
+### Query 4: 🆕 ROI Progress Tracking
+```
+Show me the current progress on Field Service Management success metrics
+```
+**Shows:** Baseline → Current → Target for each metric, proving measurable value delivery
+
+### Query 5: 🆕 Portfolio-Level ROI
+```
+What is the total projected annual ROI across all IT projects?
+```
+**Demonstrates:** Quantitative IT value ($20M+) to justify investments
+
+### Query 6: Application Roadmap
 ```
 What new features are coming to our CRM in Q1 2026?
 ```
 
-### Query 5: Cross-Module Correlation (ADVANCED)
+### Query 7: Cross-Module Correlation (ADVANCED)
 ```
 Were there any production incidents during the Field Service Management project deployment?
 ```

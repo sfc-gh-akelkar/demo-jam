@@ -1,0 +1,316 @@
+-- =====================================================
+-- Module 2 Enhancement: Load Project ROI Metrics Data
+-- =====================================================
+-- Purpose: Load detailed ROI and success metrics for each project
+-- =====================================================
+
+USE DATABASE DEMO_JAM;
+USE SCHEMA ENGINEERING_OPS;
+USE WAREHOUSE APP_WH;
+
+-- =====================================================
+-- PRJ-HC-001: Field Service Management System
+-- =====================================================
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-HC-001-01',
+'PRJ-HC-001',
+'Equipment Uptime Improvement',
+'Increase medical equipment uptime through faster field service response',
+'efficiency',
+94.0,  -- baseline: 94% uptime
+98.0,  -- target: 98% uptime
+96.5,  -- current: 96.5% uptime
+'percent',
+2100000.00,  -- $2.1M annual value from reduced downtime
+'monthly',
+TRUE,  -- primary metric
+'Director of Clinical Operations',
+'2025-10-15',
+'Measured by tracking equipment availability hours vs. total operational hours across all medical devices';
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-HC-001-02',
+'PRJ-HC-001',
+'Technician Productivity Gain',
+'Increase field service technician productivity through mobile tools',
+'efficiency',
+100.0,  -- baseline: 100% (baseline productivity)
+125.0,  -- target: 125% (+25% improvement)
+118.0,  -- current: 118% 
+'percent',
+450000.00,  -- $450K annual labor savings
+'quarterly',
+TRUE,
+'Field Service Manager',
+'2025-10-01',
+'Measured by work orders completed per technician per day';
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-HC-001-03',
+'PRJ-HC-001',
+'Customer Satisfaction Score',
+'Improve hospital/clinic satisfaction with field service',
+'satisfaction',
+3.8,  -- baseline: 3.8/5
+4.5,  -- target: 4.5/5
+4.2,  -- current: 4.2/5
+'rating_1_to_5',
+NULL,  -- No direct dollar ROI, but critical for retention
+'quarterly',
+TRUE,
+'Customer Success Manager',
+'2025-09-30',
+'Measured by post-service survey responses from hospital staff';
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-HC-001-04',
+'PRJ-HC-001',
+'Mean Time to Repair Reduction',
+'Reduce average time to repair medical equipment',
+'efficiency',
+4.5,  -- baseline: 4.5 hours MTTR
+3.15,  -- target: 3.15 hours (30% reduction)
+3.8,  -- current: 3.8 hours
+'hours',
+850000.00,  -- $850K from faster equipment restoration
+'monthly',
+FALSE,
+'Field Service Manager',
+'2025-10-15',
+'Average time from service call to equipment operational';
+
+-- =====================================================
+-- PRJ-HC-002: Telehealth Platform Expansion
+-- =====================================================
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-HC-002-01',
+'PRJ-HC-002',
+'Concurrent Session Capacity',
+'Increase telehealth platform capacity',
+'efficiency',
+50.0,  -- baseline: 50 concurrent sessions
+500.0,  -- target: 500 concurrent sessions
+125.0,  -- current: 125 (in planning/early deployment)
+'count',
+3600000.00,  -- $3.6M annual revenue from additional visits
+'monthly',
+TRUE,
+'Telehealth Director',
+NULL,
+'Platform capable of supporting up to 500 simultaneous video consultations';
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-HC-002-02',
+'PRJ-HC-002',
+'Additional Patient Visits Enabled',
+'Number of additional telehealth visits per year',
+'efficiency',
+12000.0,  -- baseline: 12K visits/year
+27000.0,  -- target: 27K visits/year (15K increase)
+12000.0,  -- current: 12K (not yet deployed)
+'count',
+2400000.00,  -- $2.4M annual revenue (15K visits * $160 avg)
+'annual',
+TRUE,
+'Chief Medical Officer',
+NULL,
+'Target 15,000 additional telehealth visits annually';
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-HC-002-03',
+'PRJ-HC-002',
+'Cost Per Visit Reduction',
+'Reduce cost per patient visit through telehealth',
+'cost_savings',
+125.00,  -- baseline: $125 avg cost for in-person
+75.00,  -- target: $75 avg cost for telehealth (40% reduction)
+125.00,  -- current: $125 (not yet deployed)
+'dollars',
+750000.00,  -- $750K annual savings on 15K new visits
+'quarterly',
+TRUE,
+'CFO Healthcare Division',
+NULL,
+'Telehealth visits cost 40% less than in-person visits';
+
+-- =====================================================
+-- PRJ-FIN-001: Financial Reporting Modernization
+-- =====================================================
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-FIN-001-01',
+'PRJ-FIN-001',
+'Month-End Close Time Reduction',
+'Reduce financial close cycle time',
+'efficiency',
+10.0,  -- baseline: 10 days
+3.0,  -- target: 3 days (70% reduction)
+5.5,  -- current: 5.5 days
+'days',
+850000.00,  -- $850K annual labor savings
+'monthly',
+TRUE,
+'Controller',
+'2025-10-31',
+'Time from period end to financial statements published';
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-FIN-001-02',
+'PRJ-FIN-001',
+'Self-Service Report Adoption',
+'Percentage of reports generated by business users vs. finance team',
+'efficiency',
+15.0,  -- baseline: 15% self-service
+90.0,  -- target: 90% self-service
+65.0,  -- current: 65%
+'percent',
+425000.00,  -- $425K annual savings from reduced report requests
+'quarterly',
+TRUE,
+'Finance Systems Manager',
+'2025-10-31',
+'Reduce finance team time spent generating ad-hoc reports';
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-FIN-001-03',
+'PRJ-FIN-001',
+'Report Generation Speed',
+'Reduce time to generate financial reports',
+'efficiency',
+45.0,  -- baseline: 45 minutes average
+11.25,  -- target: 11.25 minutes (75% reduction)
+22.0,  -- current: 22 minutes
+'minutes',
+275000.00,  -- $275K productivity improvement
+'monthly',
+FALSE,
+'Finance Systems Manager',
+'2025-10-31',
+'Average time from report request to delivery';
+
+-- =====================================================
+-- PRJ-SAL-001: CRM Analytics Enhancement
+-- =====================================================
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-SAL-001-01',
+'PRJ-SAL-001',
+'Sales Forecast Accuracy',
+'Improve sales pipeline forecast accuracy',
+'quality',
+65.0,  -- baseline: 65% accuracy
+85.0,  -- target: 85% accuracy
+75.0,  -- current: 75%
+'percent',
+1200000.00,  -- $1.2M from better resource allocation
+'quarterly',
+TRUE,
+'VP Sales',
+'2025-09-30',
+'Forecast accuracy measured as actual vs. predicted revenue within 10%';
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-SAL-001-02',
+'PRJ-SAL-001',
+'Pipeline Conversion Rate',
+'Increase lead-to-customer conversion rate',
+'revenue_impact',
+18.0,  -- baseline: 18% conversion
+20.7,  -- target: 20.7% (+15% improvement)
+19.2,  -- current: 19.2%
+'percent',
+2400000.00,  -- $2.4M additional annual revenue
+'monthly',
+TRUE,
+'VP Sales',
+'2025-09-30',
+'Percentage of qualified leads that convert to customers';
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-SAL-001-03',
+'PRJ-SAL-001',
+'Sales Rep Adoption Rate',
+'Ensure sales team adoption of new analytics tools',
+'satisfaction',
+45.0,  -- baseline: 45% using old tools regularly
+90.0,  -- target: 90% adoption
+72.0,  -- current: 72%
+'percent',
+NULL,  -- Enabler metric, no direct ROI
+'monthly',
+FALSE,
+'Sales Operations Manager',
+'2025-09-30',
+'Percentage of sales reps actively using AI-powered forecasting weekly';
+
+-- =====================================================
+-- PRJ-MKT-001: Marketing Automation Platform
+-- =====================================================
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-MKT-001-01',
+'PRJ-MKT-001',
+'Marketing Qualified Leads Growth',
+'Increase MQL volume through automation',
+'revenue_impact',
+500.0,  -- baseline: 500 MQLs/month
+700.0,  -- target: 700 MQLs/month (+40%)
+625.0,  -- current: 625 MQLs/month
+'count',
+1800000.00,  -- $1.8M annual revenue impact
+'monthly',
+TRUE,
+'VP Marketing',
+'2025-09-30',
+'Number of marketing qualified leads generated per month';
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-MKT-001-02',
+'PRJ-MKT-001',
+'Cost Per Lead Reduction',
+'Reduce marketing cost per lead',
+'cost_savings',
+85.00,  -- baseline: $85 per lead
+63.75,  -- target: $63.75 per lead (25% reduction)
+72.00,  -- current: $72 per lead
+'dollars',
+425000.00,  -- $425K annual savings
+'monthly',
+TRUE,
+'Marketing Operations Director',
+'2025-09-30',
+'Total marketing spend divided by total leads generated';
+
+INSERT INTO PROJECT_ROI_METRICS SELECT
+'METRIC-MKT-001-03',
+'PRJ-MKT-001',
+'Campaign ROI Visibility',
+'Percentage of campaigns with measured ROI',
+'quality',
+35.0,  -- baseline: 35% of campaigns measured
+100.0,  -- target: 100% measured
+78.0,  -- current: 78%
+'percent',
+NULL,  -- Enabler for optimization, indirect ROI
+'quarterly',
+TRUE,
+'Marketing Analytics Manager',
+'2025-09-30',
+'Percentage of marketing campaigns with complete ROI tracking';
+
+-- Verify metrics loaded
+SELECT 
+    p.PROJECT_NAME,
+    p.BUSINESS_UNIT,
+    COUNT(m.METRIC_ID) as metric_count,
+    SUM(m.ROI_PROJECTION_DOLLARS) as total_projected_roi,
+    COUNT(CASE WHEN m.IS_PRIMARY_METRIC THEN 1 END) as primary_metrics
+FROM IT_PROJECTS p
+LEFT JOIN PROJECT_ROI_METRICS m ON p.PROJECT_ID = m.PROJECT_ID
+GROUP BY p.PROJECT_NAME, p.BUSINESS_UNIT
+ORDER BY total_projected_roi DESC;
+
+SELECT 'Project ROI metrics data loaded successfully!' AS status;
+

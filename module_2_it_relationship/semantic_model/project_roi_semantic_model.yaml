@@ -1,0 +1,284 @@
+# =====================================================
+# Semantic Model: Project ROI Metrics
+# =====================================================
+# Purpose: Enable natural language queries on project business value and ROI
+# Target Use Case: Measuring and communicating IT project value
+# =====================================================
+
+name: project_roi_metrics
+
+custom_instructions: >
+  When analyzing project ROI, focus on quantifiable business value and success metrics.
+  Primary metrics are the most important for each project.
+  ROI projections are in dollars and represent annual expected value.
+  Current values show progress toward targets - compare against baselines and targets.
+  Healthcare projects often have patient care and safety implications beyond pure financial ROI.
+
+tables:
+  - name: project_roi_metrics
+    description: >
+      Detailed ROI and success metrics for IT projects.
+      Each project has multiple metrics tracking efficiency, cost savings,
+      revenue impact, quality improvements, and stakeholder satisfaction.
+      Includes baseline, target, and current values for tracking progress.
+
+    base_table:
+      database: DEMO_JAM
+      schema: ENGINEERING_OPS
+      table: PROJECT_ROI_METRICS
+
+    primary_key:
+      columns:
+        - metric_id
+
+    dimensions:
+      - name: metric_id
+        synonyms:
+          - "metric identifier"
+          - "metric ID"
+        description: Unique identifier for each success metric
+        data_type: VARCHAR
+        expr: METRIC_ID
+        unique: true
+
+      - name: project_id
+        synonyms:
+          - "project identifier"
+          - "project ID"
+        description: Foreign key linking to IT_PROJECTS table
+        data_type: VARCHAR
+        expr: PROJECT_ID
+
+      - name: metric_name
+        synonyms:
+          - "metric"
+          - "KPI name"
+          - "success metric"
+        description: Name of the business value metric
+        data_type: VARCHAR
+        expr: METRIC_NAME
+
+      - name: metric_type
+        synonyms:
+          - "type of metric"
+          - "metric category"
+        description: Category of metric (efficiency, cost_savings, revenue_impact, quality, satisfaction)
+        data_type: VARCHAR
+        expr: METRIC_TYPE
+        sample_values:
+          - efficiency
+          - cost_savings
+          - revenue_impact
+          - quality
+          - satisfaction
+
+      - name: unit_of_measure
+        synonyms:
+          - "measurement unit"
+          - "units"
+        description: Unit of measurement for the metric (percent, hours, dollars, days, count, rating)
+        data_type: VARCHAR
+        expr: UNIT_OF_MEASURE
+        sample_values:
+          - percent
+          - hours
+          - dollars
+          - days
+          - count
+          - rating_1_to_5
+
+      - name: is_primary_metric
+        synonyms:
+          - "primary metric"
+          - "key metric"
+          - "most important metric"
+        description: Indicates if this is a primary success metric for the project
+        data_type: BOOLEAN
+        expr: IS_PRIMARY_METRIC
+
+      - name: metric_owner
+        synonyms:
+          - "owner"
+          - "responsible party"
+          - "stakeholder"
+        description: Executive or team responsible for this metric
+        data_type: VARCHAR
+        expr: METRIC_OWNER
+
+      - name: measurement_frequency
+        synonyms:
+          - "measurement cadence"
+          - "tracking frequency"
+        description: How often the metric is measured (monthly, quarterly, annual, one-time)
+        data_type: VARCHAR
+        expr: MEASUREMENT_FREQUENCY
+        sample_values:
+          - monthly
+          - quarterly
+          - annual
+          - one-time
+
+      - name: last_measured_date
+        synonyms:
+          - "last measured"
+          - "most recent measurement"
+        description: Date the metric was last updated
+        data_type: DATE
+        expr: LAST_MEASURED_DATE
+
+    measures:
+      - name: baseline_value
+        synonyms:
+          - "baseline"
+          - "starting value"
+          - "original performance"
+        description: Starting value before project implementation
+        data_type: NUMBER
+        expr: BASELINE_VALUE
+
+      - name: target_value
+        synonyms:
+          - "target"
+          - "goal"
+          - "objective"
+        description: Target value the project aims to achieve
+        data_type: NUMBER
+        expr: TARGET_VALUE
+
+      - name: current_value
+        synonyms:
+          - "current performance"
+          - "actual value"
+          - "current result"
+        description: Current measured value showing progress
+        data_type: NUMBER
+        expr: CURRENT_VALUE
+
+      - name: roi_projection_dollars
+        synonyms:
+          - "ROI"
+          - "expected value"
+          - "projected return"
+          - "business value in dollars"
+        description: Projected annual ROI in dollars for this metric
+        data_type: NUMBER
+        expr: ROI_PROJECTION_DOLLARS
+
+      - name: total_roi_projection
+        synonyms:
+          - "total ROI"
+          - "total expected value"
+          - "sum of ROI"
+        description: Sum of all ROI projections across metrics
+        data_type: NUMBER
+        expr: SUM(ROI_PROJECTION_DOLLARS)
+
+      - name: avg_roi_projection
+        synonyms:
+          - "average ROI"
+          - "mean ROI"
+        description: Average ROI projection
+        data_type: NUMBER
+        expr: AVG(ROI_PROJECTION_DOLLARS)
+
+      - name: metric_count
+        synonyms:
+          - "number of metrics"
+          - "total metrics"
+        description: Count of success metrics
+        data_type: NUMBER
+        expr: COUNT(*)
+
+      - name: progress_percentage
+        synonyms:
+          - "percent complete"
+          - "progress toward target"
+        description: Progress from baseline to target as a percentage
+        data_type: NUMBER
+        expr: CASE 
+          WHEN TARGET_VALUE = BASELINE_VALUE THEN 100.0
+          ELSE ((CURRENT_VALUE - BASELINE_VALUE) / (TARGET_VALUE - BASELINE_VALUE)) * 100.0
+        END
+
+  - name: it_projects
+    description: >
+      IT project portfolio for joining with ROI metrics.
+      Provides project context including name, status, budget, and business unit.
+
+    base_table:
+      database: DEMO_JAM
+      schema: ENGINEERING_OPS
+      table: IT_PROJECTS
+
+    primary_key:
+      columns:
+        - project_id
+
+    dimensions:
+      - name: project_id
+        data_type: VARCHAR
+        expr: PROJECT_ID
+        unique: true
+
+      - name: project_name
+        synonyms:
+          - "project"
+          - "initiative name"
+        description: Name of the IT project
+        data_type: VARCHAR
+        expr: PROJECT_NAME
+
+      - name: business_unit
+        synonyms:
+          - "department"
+          - "business sponsor"
+        description: Business unit sponsoring the project
+        data_type: VARCHAR
+        expr: BUSINESS_UNIT
+        sample_values:
+          - Healthcare
+          - Finance
+          - Sales
+          - Marketing
+          - HR
+          - Operations
+
+      - name: status
+        synonyms:
+          - "project status"
+          - "state"
+        description: Current project status
+        data_type: VARCHAR
+        expr: STATUS
+        sample_values:
+          - In Progress
+          - Planned
+          - Completed
+
+    measures:
+      - name: budget_allocated
+        synonyms:
+          - "project budget"
+          - "total budget"
+        description: Total budget allocated to project
+        data_type: NUMBER
+        expr: BUDGET_ALLOCATED
+
+      - name: budget_spent
+        synonyms:
+          - "spend to date"
+          - "actual spend"
+        description: Budget spent to date
+        data_type: NUMBER
+        expr: BUDGET_SPENT
+
+relationships:
+  - name: metrics_to_projects
+    left_table: project_roi_metrics
+    right_table: it_projects
+    relationship_columns:
+      - left_column: project_id
+        right_column: project_id
+    join_type: left_outer
+    relationship_type: many_to_one
+
