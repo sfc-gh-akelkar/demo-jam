@@ -129,7 +129,7 @@ Search Service: IT_DOCS_SEARCH
 Description: Search IT policies, SLAs, project governance, best practices
 ```
 
-4. **Agent Instructions:**
+5. **Agent Instructions:**
 ```
 You are an intelligent assistant for engineering and IT leadership.
 
@@ -158,7 +158,7 @@ When discussing ROI, reference both the multiple (e.g., 3.5:1) and annual dollar
 When discussing SLAs, cite specific targets from IT documentation.
 ```
 
-5. **Save and test with sample queries below**
+6. **Save and test with sample queries below**
 
 ---
 
