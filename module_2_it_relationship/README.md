@@ -87,7 +87,9 @@ CREATE OR REPLACE TABLE APP_ROADMAP (...);
 
 -- Step 2: Load IT support ticket data
 -- File: sql/02_load_it_support_data.sql
--- Loads 16 tickets across 6 business units
+-- Loads 16 tickets (Jan-May 2025)
+-- File: sql/09_add_recent_support_tickets.sql (RECOMMENDED!)
+-- Adds 13 recent tickets (Jun-Nov 2025) for meaningful trend analysis
 
 -- Step 3: Load IT project data
 -- File: sql/03_load_it_projects_data.sql
@@ -330,12 +332,14 @@ Which business units have both high production incident rates AND slow IT suppor
 
 ## Data Overview
 
-### IT_SUPPORT_TICKETS (16+ tickets)
-- **Business Units:** Healthcare, Finance, Sales, Marketing, HR, Operations
+### IT_SUPPORT_TICKETS (29 tickets with script 09)
+- **Business Units:** Healthcare (16 tickets), Finance, Sales, Marketing, HR, Operations
+- **Date Range:** January - November 2025 (full year coverage)
 - **Ticket Types:** Access Request, Software Issue, Hardware Issue, Performance Issue, Network Issue
 - **Priorities:** Critical, High, Medium, Low
 - **Resolution Times:** Tracked in hours
 - **Teams:** IT Support Team, Application Support, Network Team
+- **Note:** Run script 09 for recent tickets to enable "last 6 months" trend queries
 
 ### IT_PROJECTS (10 projects, $5.5M total budget)
 
@@ -463,8 +467,9 @@ module_2_it_relationship/
 │   ├── 04_load_app_roadmap_data.sql
 │   ├── 05_create_project_roi_table.sql
 │   ├── 06_load_project_roi_data.sql
-│   ├── 07_load_it_sla_documentation.sql (NEW!)
-│   └── 08_create_cortex_search.sql (NEW!)
+│   ├── 07_load_it_sla_documentation.sql
+│   ├── 08_create_cortex_search.sql
+│   └── 09_add_recent_support_tickets.sql (RECOMMENDED for trend analysis)
 └── semantic_model/
     ├── module_2_semantic_model.yaml (RECOMMENDED - consolidated)
     └── README.md (semantic model documentation)
