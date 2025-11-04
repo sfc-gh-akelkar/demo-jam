@@ -67,13 +67,16 @@ A comprehensive, production-quality demonstration of Snowflake Intelligence capa
 -- Run: module_2_it_relationship/sql/04_load_app_roadmap_data.sql
 -- Run: module_2_it_relationship/sql/05_create_project_roi_table.sql
 -- Run: module_2_it_relationship/sql/06_load_project_roi_data.sql
+-- Run: module_2_it_relationship/sql/07_load_it_sla_documentation.sql
 
--- Step 3: Upload semantic models
--- Upload: module_2_it_relationship/semantic_model/it_support_semantic_model.yaml
--- Upload: module_2_it_relationship/semantic_model/project_roi_semantic_model.yaml
+-- Step 3: Create Cortex Search Service for IT documentation
+-- Run: module_2_it_relationship/sql/08_create_cortex_search.sql
+
+-- Step 4: Upload semantic model (consolidated)
+-- Upload: module_2_it_relationship/semantic_model/module_2_semantic_model.yaml
 --   to @DEMO_JAM.ENGINEERING_OPS.DEMO_STAGE
 
--- Step 4: Update Cortex Agent with Module 2 tools (see Agent Setup section)
+-- Step 5: Update Cortex Agent with Module 2 tools (see Agent Setup section)
 ```
 
 ---
@@ -102,23 +105,15 @@ Semantic Model: @DEMO_STAGE/incidents_semantic_model.yaml
 Description: Query production incidents, root causes, resolution times
 ```
 
-#### Tool 2: IT Support Tickets (Cortex Analyst)
+#### Tool 2: IT Relationship & Value (Cortex Analyst)
 ```
-Name: it_support_analyst
+Name: it_relationship_analyst
 Type: Cortex Analyst
-Semantic Model: @DEMO_STAGE/it_support_semantic_model.yaml
-Description: Query IT support performance and ticket metrics by business unit
+Semantic Model: @DEMO_STAGE/module_2_semantic_model.yaml
+Description: Query IT support performance, project ROI, success metrics, and application roadmap
 ```
 
-#### Tool 3: Project ROI Metrics (Cortex Analyst)
-```
-Name: project_roi_analyst
-Type: Cortex Analyst
-Semantic Model: @DEMO_STAGE/project_roi_semantic_model.yaml
-Description: Query IT project ROI, business value, and success metrics
-```
-
-#### Tool 4: Engineering Documentation (Cortex Search)
+#### Tool 3: Engineering Documentation (Cortex Search)
 ```
 Name: engineering_docs_search
 Type: Cortex Search
