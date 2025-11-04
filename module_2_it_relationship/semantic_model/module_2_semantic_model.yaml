@@ -1,0 +1,522 @@
+# =====================================================
+# Consolidated Semantic Model: Module 2 - IT Relationship & Value Management
+# =====================================================
+# Purpose: Unified semantic model for IT support, projects, and ROI metrics
+# Covers: IT_SUPPORT_TICKETS, IT_PROJECTS, PROJECT_ROI_METRICS, APP_ROADMAP
+# =====================================================
+
+name: it_relationship_value
+
+custom_instructions: >
+  You are analyzing IT performance, project portfolio, and business value metrics.
+  When analyzing IT support, focus on comparing performance across business units.
+  When analyzing projects, emphasize ROI and quantifiable business value.
+  Healthcare is a critical business unit requiring special attention.
+  Calculate resolution times in both hours and days for readability.
+  ROI projections are expressed as multiples (e.g., 3.5 means 3.5:1 return).
+  Track metrics that are 'On Track' vs 'At Risk' to identify projects needing attention.
+
+tables:
+  # ===================================================================
+  # IT SUPPORT TICKETS
+  # ===================================================================
+  - name: it_support_tickets
+    description: >
+      IT support tickets from all business units including helpdesk requests,
+      access requests, software issues, hardware issues, and performance problems.
+      Tracks resolution times and ticket status.
+
+    base_table:
+      database: DEMO_JAM
+      schema: ENGINEERING_OPS
+      table: IT_SUPPORT_TICKETS
+
+    primary_key:
+      columns:
+        - ticket_id
+
+    dimensions:
+      - name: ticket_id
+        synonyms:
+          - "ticket number"
+          - "ticket identifier"
+          - "request ID"
+        description: Unique identifier for each support ticket
+        data_type: VARCHAR
+        expr: TICKET_ID
+        unique: true
+
+      - name: ticket_business_unit
+        synonyms:
+          - "ticket department"
+          - "ticket business unit"
+          - "requesting organization"
+        description: Business unit that submitted the ticket
+        data_type: VARCHAR
+        expr: BUSINESS_UNIT
+        sample_values:
+          - Healthcare
+          - Finance
+          - Sales
+          - Marketing
+          - HR
+          - Operations
+
+      - name: ticket_type
+        synonyms:
+          - "issue type"
+          - "request type"
+          - "ticket category"
+        description: Type of support request
+        data_type: VARCHAR
+        expr: TICKET_TYPE
+        sample_values:
+          - Access Request
+          - Software Issue
+          - Hardware Issue
+          - Performance Issue
+          - Network Issue
+
+      - name: ticket_priority
+        synonyms:
+          - "ticket urgency"
+          - "ticket importance"
+        description: Ticket priority level
+        data_type: VARCHAR
+        expr: PRIORITY
+        sample_values:
+          - Critical
+          - High
+          - Medium
+          - Low
+
+      - name: ticket_status
+        synonyms:
+          - "ticket state"
+          - "resolution status"
+        description: Current status of the ticket
+        data_type: VARCHAR
+        expr: STATUS
+
+      - name: created_date
+        synonyms:
+          - "submission date"
+          - "ticket creation date"
+        description: Date the ticket was created
+        data_type: DATE
+        expr: CREATED_DATE
+
+    measures:
+      - name: resolution_time_hours
+        synonyms:
+          - "time to resolve in hours"
+          - "resolution duration"
+        description: Time taken to resolve each ticket in hours
+        data_type: NUMBER
+        expr: RESOLUTION_TIME_HOURS
+
+      - name: avg_resolution_time_hours
+        synonyms:
+          - "average resolution time"
+          - "mean time to resolve"
+        description: Average time to resolve tickets in hours
+        data_type: NUMBER
+        expr: AVG(RESOLUTION_TIME_HOURS)
+
+      - name: ticket_count
+        synonyms:
+          - "number of tickets"
+          - "ticket volume"
+        description: Count of support tickets
+        data_type: NUMBER
+        expr: COUNT(*)
+
+  # ===================================================================
+  # IT PROJECTS
+  # ===================================================================
+  - name: it_projects
+    description: >
+      IT project portfolio for all business units.
+      Tracks project status, budgets, spend, and completion.
+
+    base_table:
+      database: DEMO_JAM
+      schema: ENGINEERING_OPS
+      table: IT_PROJECTS
+
+    primary_key:
+      columns:
+        - project_id
+
+    dimensions:
+      - name: project_id
+        synonyms:
+          - "project identifier"
+          - "project code"
+        description: Unique identifier for each IT project
+        data_type: VARCHAR
+        expr: PROJECT_ID
+        unique: true
+
+      - name: project_name
+        synonyms:
+          - "project"
+          - "initiative name"
+        description: Name of the IT project
+        data_type: VARCHAR
+        expr: PROJECT_NAME
+
+      - name: project_business_unit
+        synonyms:
+          - "project department"
+          - "business unit sponsor"
+          - "sponsoring unit"
+        description: Business unit sponsoring the project
+        data_type: VARCHAR
+        expr: BUSINESS_UNIT
+        sample_values:
+          - Healthcare
+          - Finance
+          - Sales
+          - Marketing
+          - HR
+          - Operations
+
+      - name: project_status
+        synonyms:
+          - "project state"
+          - "status"
+        description: Current project status
+        data_type: VARCHAR
+        expr: STATUS
+        sample_values:
+          - In Progress
+          - Planning
+          - Completed
+          - On Hold
+
+      - name: project_type
+        description: Type of IT project
+        data_type: VARCHAR
+        expr: PROJECT_TYPE
+        sample_values:
+          - Application Development
+          - Infrastructure Upgrade
+          - System Upgrade
+          - Governance & Compliance
+
+      - name: project_priority
+        synonyms:
+          - "project importance"
+        description: Project priority level
+        data_type: VARCHAR
+        expr: PRIORITY
+
+    measures:
+      - name: budget_allocated
+        synonyms:
+          - "project budget"
+          - "total budget"
+        description: Total budget allocated to the project
+        data_type: NUMBER
+        expr: BUDGET_ALLOCATED
+
+      - name: budget_spent
+        synonyms:
+          - "spend to date"
+          - "actual spend"
+        description: Amount spent on the project to date
+        data_type: NUMBER
+        expr: BUDGET_SPENT
+
+      - name: budget_remaining
+        synonyms:
+          - "remaining budget"
+          - "budget left"
+        description: Remaining budget for the project
+        data_type: NUMBER
+        expr: BUDGET_REMAINING
+
+      - name: percent_complete
+        synonyms:
+          - "project completion"
+          - "percent done"
+        description: Percentage of project completed
+        data_type: NUMBER
+        expr: PERCENT_COMPLETE
+
+      - name: total_budget
+        synonyms:
+          - "sum of budgets"
+          - "total allocated"
+        description: Sum of all project budgets
+        data_type: NUMBER
+        expr: SUM(BUDGET_ALLOCATED)
+
+      - name: project_count
+        synonyms:
+          - "number of projects"
+          - "count of projects"
+        description: Count of IT projects
+        data_type: NUMBER
+        expr: COUNT(*)
+
+  # ===================================================================
+  # PROJECT ROI METRICS
+  # ===================================================================
+  - name: project_roi_metrics
+    description: >
+      Detailed ROI metrics and success criteria for IT projects.
+      Each project can have multiple metrics tracking different aspects of business value.
+      Includes quantifiable targets, current progress, and projected financial returns.
+
+    base_table:
+      database: DEMO_JAM
+      schema: ENGINEERING_OPS
+      table: PROJECT_ROI_METRICS
+
+    primary_key:
+      columns:
+        - metric_id
+
+    dimensions:
+      - name: metric_id
+        synonyms:
+          - "metric identifier"
+        description: Unique identifier for each ROI metric
+        data_type: VARCHAR
+        expr: METRIC_ID
+        unique: true
+
+      - name: metric_project_id
+        synonyms:
+          - "related project"
+        description: Reference to the IT project this metric belongs to
+        data_type: VARCHAR
+        expr: PROJECT_ID
+
+      - name: metric_name
+        synonyms:
+          - "metric"
+          - "KPI"
+          - "success metric"
+        description: Name of the metric being tracked
+        data_type: VARCHAR
+        expr: METRIC_NAME
+
+      - name: metric_type
+        synonyms:
+          - "type of metric"
+        description: Type of business impact
+        data_type: VARCHAR
+        expr: METRIC_TYPE
+        sample_values:
+          - Cost Reduction
+          - Revenue Increase
+          - Efficiency Gain
+          - Quality Improvement
+
+      - name: metric_status
+        synonyms:
+          - "metric progress status"
+          - "achievement status"
+        description: Current status of metric achievement
+        data_type: VARCHAR
+        expr: STATUS
+        sample_values:
+          - On Track
+          - At Risk
+          - Achieved
+          - Not Started
+
+      - name: target_unit
+        synonyms:
+          - "unit of measurement"
+        description: Unit for the metric
+        data_type: VARCHAR
+        expr: TARGET_UNIT
+
+    measures:
+      - name: target_value
+        synonyms:
+          - "goal"
+          - "target"
+        description: Target value to achieve for this metric
+        data_type: NUMBER
+        expr: TARGET_VALUE
+
+      - name: baseline_value
+        synonyms:
+          - "starting value"
+          - "initial value"
+        description: Starting baseline value before project
+        data_type: NUMBER
+        expr: BASELINE_VALUE
+
+      - name: current_value
+        synonyms:
+          - "current progress"
+          - "actual value"
+        description: Current measured value of the metric
+        data_type: NUMBER
+        expr: CURRENT_VALUE
+
+      - name: roi_projection_multiple
+        synonyms:
+          - "ROI multiple"
+          - "return on investment ratio"
+          - "ROI"
+        description: Projected ROI as a multiple (e.g., 3.5 means 3.5:1 return)
+        data_type: NUMBER
+        expr: ROI_PROJECTION_MULTIPLE
+
+      - name: avg_roi_multiple
+        synonyms:
+          - "average ROI"
+        description: Average ROI multiple across metrics
+        data_type: NUMBER
+        expr: AVG(ROI_PROJECTION_MULTIPLE)
+
+      - name: roi_projection_annual_value
+        synonyms:
+          - "annual ROI value"
+          - "yearly return"
+          - "annual business value"
+        description: Projected annual financial value in dollars
+        data_type: NUMBER
+        expr: ROI_PROJECTION_ANNUAL_VALUE
+
+      - name: total_annual_value
+        synonyms:
+          - "total annual ROI"
+          - "sum of annual value"
+        description: Sum of projected annual values
+        data_type: NUMBER
+        expr: SUM(ROI_PROJECTION_ANNUAL_VALUE)
+
+      - name: metric_count
+        synonyms:
+          - "number of metrics"
+        description: Count of ROI metrics
+        data_type: NUMBER
+        expr: COUNT(*)
+
+  # ===================================================================
+  # APPLICATION ROADMAP
+  # ===================================================================
+  - name: app_roadmap
+    description: >
+      Application feature roadmap for business communication.
+      Tracks planned features, release schedules, and business value.
+
+    base_table:
+      database: DEMO_JAM
+      schema: ENGINEERING_OPS
+      table: APP_ROADMAP
+
+    primary_key:
+      columns:
+        - roadmap_id
+
+    dimensions:
+      - name: roadmap_id
+        description: Unique identifier for each roadmap item
+        data_type: VARCHAR
+        expr: ROADMAP_ID
+        unique: true
+
+      - name: application_name
+        synonyms:
+          - "app"
+          - "system"
+          - "application"
+        description: Name of the application
+        data_type: VARCHAR
+        expr: APPLICATION_NAME
+        sample_values:
+          - Salesforce CRM
+          - SAP ERP
+          - Epic EMR
+          - Workday HRIS
+          - Marketo
+
+      - name: feature_name
+        synonyms:
+          - "feature"
+          - "capability"
+          - "enhancement"
+        description: Name of the planned feature
+        data_type: VARCHAR
+        expr: FEATURE_NAME
+
+      - name: feature_category
+        synonyms:
+          - "feature type"
+        description: Category of the feature
+        data_type: VARCHAR
+        expr: FEATURE_CATEGORY
+
+      - name: release_quarter
+        synonyms:
+          - "planned quarter"
+          - "target quarter"
+        description: Planned release quarter
+        data_type: VARCHAR
+        expr: RELEASE_QUARTER
+
+      - name: roadmap_status
+        synonyms:
+          - "feature status"
+          - "development status"
+        description: Current status of the feature
+        data_type: VARCHAR
+        expr: STATUS
+        sample_values:
+          - Planned
+          - In Development
+          - Released
+
+      - name: roadmap_priority
+        synonyms:
+          - "feature priority"
+        description: Priority of the feature
+        data_type: VARCHAR
+        expr: PRIORITY
+
+      - name: roadmap_business_unit
+        synonyms:
+          - "requesting business unit"
+        description: Business unit requesting or benefiting from the feature
+        data_type: VARCHAR
+        expr: BUSINESS_UNIT
+
+    measures:
+      - name: estimated_effort_days
+        synonyms:
+          - "development effort"
+          - "estimated days"
+        description: Estimated development effort in days
+        data_type: NUMBER
+        expr: ESTIMATED_EFFORT_DAYS
+
+      - name: roadmap_feature_count
+        synonyms:
+          - "number of features"
+          - "feature count"
+        description: Count of roadmap features
+        data_type: NUMBER
+        expr: COUNT(*)
+
+# ===================================================================
+# RELATIONSHIPS
+# ===================================================================
+relationships:
+  - name: roi_metrics_to_project
+    left_table: project_roi_metrics
+    right_table: it_projects
+    relationship_columns:
+      - left_column: project_id
+        right_column: project_id
+    join_type: left_outer
+    relationship_type: many_to_one
+
