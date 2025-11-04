@@ -288,6 +288,28 @@ Show me all planned features for the Healthcare business unit
 Which applications have the most features in development?
 ```
 
+### IT Policies & SLAs (Cortex Search on Unstructured)
+
+```
+What are the IT support SLA targets for critical priority tickets?
+```
+
+```
+How does Healthcare's IT SLA differ from other business units?
+```
+
+```
+What is the process for prioritizing new IT projects?
+```
+
+```
+How do we measure IT project ROI and success?
+```
+
+```
+What are the best practices for submitting IT support tickets?
+```
+
 ### Cross-Domain Intelligence
 
 ```
