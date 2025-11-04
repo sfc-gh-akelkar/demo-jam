@@ -288,9 +288,10 @@ tables:
         expr: METRIC_ID
         unique: true
 
-      - name: metric_project_id
+      - name: project_id
         synonyms:
           - "related project"
+          - "metric project id"
         description: Reference to the IT project this metric belongs to
         data_type: VARCHAR
         expr: PROJECT_ID
